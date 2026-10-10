@@ -83,14 +83,14 @@ svg{width:18px;height:18px;flex:none}
 .file span{flex:1;text-align:center;font-size:13px;padding:8px 10px;border-radius:9px;border:1px dashed rgba(255,255,255,.22);color:#cbd5e1}
 
 /* view cube + tools */
-.tools{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2}
-.vc{width:84px;height:84px;perspective:340px}
-.cube{width:100%;height:100%;position:relative;transform-style:preserve-3d}
-.f{position:absolute;inset:0;display:grid;place-items:center;font:700 10.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.06em;color:#334155;background:rgba(248,250,252,.9);border:1.5px solid #94a3b8;cursor:pointer;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:background .15s}
+.tools{position:absolute;right:8px;top:6px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2}
+.vc{width:104px;height:104px;perspective:420px;position:relative}
+.cube{position:absolute;left:22px;top:22px;width:60px;height:60px;transform-style:preserve-3d}
+.f{position:absolute;inset:0;display:grid;place-items:center;font:700 9px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.06em;color:#334155;background:rgba(248,250,252,.9);border:1.5px solid #94a3b8;cursor:pointer;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:background .15s}
 .f:hover{background:#bfdbfe;color:#1e3a8a}
-.f.front{transform:translateZ(42px)}.f.back{transform:rotateY(180deg) translateZ(42px)}
-.f.right{transform:rotateY(90deg) translateZ(42px)}.f.left{transform:rotateY(-90deg) translateZ(42px)}
-.f.top{transform:rotateX(90deg) translateZ(42px)}.f.bottom{transform:rotateX(-90deg) translateZ(42px)}
+.f.front{transform:translateZ(30px)}.f.back{transform:rotateY(180deg) translateZ(30px)}
+.f.right{transform:rotateY(90deg) translateZ(30px)}.f.left{transform:rotateY(-90deg) translateZ(30px)}
+.f.top{transform:rotateX(90deg) translateZ(30px)}.f.bottom{transform:rotateX(-90deg) translateZ(30px)}
 .tbtn{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;border:0}
 .tbtn[aria-pressed="true"]{background:#2563eb;color:#fff}
 .tgroup{display:flex;flex-direction:column;border-radius:12px;overflow:hidden}
@@ -118,14 +118,15 @@ svg{width:18px;height:18px;flex:none}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .narrow .panel{width:auto;right:14px;max-height:calc(100% - 120px)}
 .narrow .tools{top:76px}
-.narrow .vc{width:62px;height:62px}
-.narrow .f{font-size:8.5px}
-.narrow .f.front{transform:translateZ(31px)}.narrow .f.back{transform:rotateY(180deg) translateZ(31px)}
-.narrow .f.right{transform:rotateY(90deg) translateZ(31px)}.narrow .f.left{transform:rotateY(-90deg) translateZ(31px)}
-.narrow .f.top{transform:rotateX(90deg) translateZ(31px)}.narrow .f.bottom{transform:rotateX(-90deg) translateZ(31px)}
-.narrow .dial{transform:scale(.82);transform-origin:100% 100%;right:10px;bottom:34px}
+.narrow .vc{width:80px;height:80px}
+.narrow .cube{left:17px;top:17px;width:46px;height:46px}
+.narrow .f{font-size:7px}
+.narrow .f.front{transform:translateZ(23px)}.narrow .f.back{transform:rotateY(180deg) translateZ(23px)}
+.narrow .f.right{transform:rotateY(90deg) translateZ(23px)}.narrow .f.left{transform:rotateY(-90deg) translateZ(23px)}
+.narrow .f.top{transform:rotateX(90deg) translateZ(23px)}.narrow .f.bottom{transform:rotateX(-90deg) translateZ(23px)}
+.narrow .dial{transform:scale(.72);transform-origin:100% 100%;right:8px;bottom:30px}
 .narrow .cap{display:none}
-.narrow .toast{max-width:calc(100% - 28px);top:auto;bottom:16px;border-radius:12px}
+.narrow .toast{max-width:calc(100% - 28px);width:max-content;top:74px;border-radius:12px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 `;
 
@@ -137,7 +138,7 @@ svg{width:18px;height:18px;flex:none}
   <div class="panel glass" data-r="panel">
    <div class="p-head" data-r="phead">
     ${svg('grip', 'grip')}
-    <div class="p-title">UP-400 Ultrasonic Homogenizer<small>Drag me · tap a section to open it</small></div>
+    <div class="p-title">UP-400 Ultrasonic Homogenizer<small>Drag to move · tap to open or close</small></div>
     <button class="p-tog" data-r="ptog" aria-label="Collapse panel" aria-expanded="true">${svg('chev')}</button>
    </div>
    <div class="p-body">
@@ -256,7 +257,7 @@ svg{width:18px;height:18px;flex:none}
 
   function Viewer(host) {
     var THREE = window.THREE;
-    var BASE = host.getAttribute('data-base') || SCRIPT_BASE;
+    var BASE = host.hasAttribute('data-base') ? host.getAttribute('data-base') : SCRIPT_BASE;
     var MODEL = host.getAttribute('data-model') || 'device.glb';
     var root = host.attachShadow ? host.attachShadow({ mode: 'open' }) : host;
     root.innerHTML = '<style>' + CSS + '</style>' + HTML;
@@ -267,11 +268,14 @@ svg{width:18px;height:18px;flex:none}
     new ResizeObserver(function () { wrap.classList.toggle('narrow', host.clientWidth < 700); }).observe(host);
     if (host.clientWidth < 700) R('panel').classList.add('collapsed');
 
-    var started = false;
-    var io = new IntersectionObserver(function (es) {
-      if (!started && es.some(function (e) { return e.isIntersecting; })) { started = true; io.disconnect(); start(); }
-    }, { rootMargin: '300px' });
-    io.observe(host);
+    var started = false, io = null;
+    function go() { if (started) return; started = true; if (io) io.disconnect();
+      try { start(); } catch (err) { console.error('UP-400 viewer:', err); R('loading').hidden = false; R('loading').textContent = 'VIEWER ERROR: ' + (err && err.message || err); } }
+    if (window.IntersectionObserver) {
+      io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) go(); }, { rootMargin: '300px' });
+      io.observe(host);
+    }
+    setTimeout(go, 2500);
 
     function start() {
       var MM = 0.001;
@@ -302,10 +306,11 @@ svg{width:18px;height:18px;flex:none}
         top:    { dir: [0, 1, 0.02],      dist: 1.75, fov: 30 },
         bottom: { dir: [0, -1, 0.02],     dist: 1.75, fov: 30 }
       };
-      function viewPos(v) { return new THREE.Vector3(v.dir[0], v.dir[1], v.dir[2]).normalize().multiplyScalar(v.dist * fovFactor(v.fov)).add(controls.target); }
+      function fit() { var a = camera.aspect || 1; return a < 1 ? Math.min(1.9, Math.max(1, 0.95 / a)) : 1; }
+      function viewPos(v) { return new THREE.Vector3(v.dir[0], v.dir[1], v.dir[2]).normalize().multiplyScalar(v.dist * fovFactor(v.fov) * fit()).add(controls.target); }
       camera.position.copy(viewPos(VIEWS.iso));
       var baseMaxDist = 3.2;
-      function applyFovLimits() { var f = fovFactor(camera.fov); controls.minDistance = 0.45 * f; controls.maxDistance = baseMaxDist * f; }
+      function applyFovLimits() { var f = fovFactor(camera.fov); controls.minDistance = 0.45 * f; controls.maxDistance = baseMaxDist * f * fit(); }
       applyFovLimits();
 
       scene.add(new THREE.HemisphereLight(0xffffff, 0x9aa6b2, 0.35));
@@ -342,8 +347,8 @@ svg{width:18px;height:18px;flex:none}
       var RANGE = { power: [0, 400, 10], duty: [10, 100, 5], time: [1, 30, 1], tmax: [20, 100, 1] };
       var SET_KEY = { power: 'power', duty: 'duty', time: 'time', temp: 'tmax' };
       var run = { state: 'ready', power: 200, t: 0, energy: 0, temp: 22, sample: 1, ignoreLimit: false, on: false };
-      var lights = { ready: '#2e58ff', process: '#19c3ff', pause: '#ffb020', finish: '#22c55e', error: '#ff2a2a' };
-      var lightX = { ready: 430, process: 392, pause: 268, finish: 318, error: 240 };
+      var lights = { ready: '#0a60ff', process: '#04ccff', pause: '#ff9f00', finish: '#03ff20', error: '#f80c00' };
+      var lightX = { ready: 416, process: 390, pause: 270, finish: 330, error: 238 };
       var lightOn = true, preview = null, previewT = 0;
       var LIGHT_ROWS = [['ready', 277], ['process', 355], ['pause', 433], ['finish', 511], ['error', 589]];
       var lightPix = null;
@@ -375,8 +380,8 @@ svg{width:18px;height:18px;flex:none}
         }
         if (s === 'running') {
           g2.textAlign = 'left'; g2.fillStyle = '#0f172a'; g2.font = '700 25px Inter, Arial, sans-serif';
-          g2.fillText(String(run.power), 112, 170); g2.fillText((run.energy / 4184).toFixed(2), 310, 170);
-          g2.fillText(run.temp.toFixed(1), 112, 303); g2.fillText(fmtTime(run.t), 310, 303);
+          g2.fillText(String(run.power), 112, 170); g2.fillText((run.energy / 4184).toFixed(2), 334, 170);
+          g2.fillText(run.temp.toFixed(1), 112, 303); g2.fillText(fmtTime(run.t), 334, 303);
           if (run.on) { g2.beginPath(); g2.arc(452, 28, 7, 0, 7); g2.fillStyle = '#22c55e'; g2.fill(); }
         }
         if (s === 'pause' || s === 'end') {
@@ -631,8 +636,8 @@ svg{width:18px;height:18px;flex:none}
         var b = beaker(); b.position.set(0, -TABLE_TOP * MM, 39.5 * MM); tableNode.add(b);
         R('loading').hidden = true;
         setProbe(7); update(); applyLight(); setColor(store('color') || 'white', true); show('start', true);
-        resize(); invalidate();
-      }, undefined, function () { R('loading').textContent = 'THE 3D MODEL COULD NOT LOAD'; });
+        resize(); camera.position.copy(viewPos(VIEWS.iso)); applyFovLimits(); invalidate();
+      }, undefined, function (err) { R('loading').hidden = false; R('loading').textContent = 'THE 3D MODEL COULD NOT LOAD (' + BASE + MODEL + ')'; console.error(err); });
 
       /* ---------- colors ---------- */
       var colorName = 'white';
@@ -703,7 +708,7 @@ svg{width:18px;height:18px;flex:none}
           el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.right = 'auto'; el.style.bottom = 'auto';
           el._pos = [x / s.width, y / s.height];
         });
-        handle.addEventListener('pointerup', function (e) { if (st && st.moved && el._pos) store('pos-' + name, el._pos); st = null; });
+        handle.addEventListener('pointerup', function (e) { if (st && st.moved && el._pos) store('pos-' + name, el._pos); if (st && !st.moved && el === R('panel') && !e.target.closest('button')) R('ptog').click(); st = null; });
         var p = store('pos-' + name); if (p) el._pos = p;
         el._float = true;
       }
@@ -754,7 +759,7 @@ svg{width:18px;height:18px;flex:none}
       var signCanvas = document.createElement('canvas'); signCanvas.width = 640; signCanvas.height = 220;
       var signTex = new THREE.CanvasTexture(signCanvas); signTex.encoding = THREE.sRGBEncoding; signTex.anisotropy = 8;
       var sign = new THREE.Sprite(new THREE.SpriteMaterial({ map: signTex, transparent: true, depthTest: true, toneMapped: false }));
-      sign.scale.set(0.24, 0.0825, 1); sign.position.set(0.25, 0.33, 0.06); sign.renderOrder = 5; scene.add(sign);
+      sign.scale.set(0.24, 0.0825, 1); sign.position.set(0.3, 0.37, 0.06); sign.renderOrder = 5; scene.add(sign);
       function drawOrderSign() {
         var x = signCanvas.getContext('2d'), W = 640, H = 220, r = 44;
         x.clearRect(0, 0, W, H);
@@ -776,24 +781,24 @@ svg{width:18px;height:18px;flex:none}
       }
 
       /* ---------- cavitation bubbles at the probe tip ---------- */
-      var NB = 700, bPos = new Float32Array(NB * 3), bVel = new Float32Array(NB * 3), bLife = new Float32Array(NB);
+      var NB = 1400, bPos = new Float32Array(NB * 3), bVel = new Float32Array(NB * 3), bLife = new Float32Array(NB);
       var bGeo = new THREE.BufferGeometry(); bGeo.setAttribute('position', new THREE.BufferAttribute(bPos, 3)); bGeo.setDrawRange(0, NB);
       var dot = document.createElement('canvas'); dot.width = dot.height = 64; var dx2 = dot.getContext('2d');
       var rg2 = dx2.createRadialGradient(32, 32, 2, 32, 32, 30); rg2.addColorStop(0, 'rgba(255,255,255,1)'); rg2.addColorStop(0.45, 'rgba(235,245,255,.85)'); rg2.addColorStop(1, 'rgba(255,255,255,0)');
       dx2.fillStyle = rg2; dx2.fillRect(0, 0, 64, 64);
-      var bubbles = new THREE.Points(bGeo, new THREE.PointsMaterial({ size: 0.0026, map: new THREE.CanvasTexture(dot), transparent: true, depthWrite: false, opacity: 0.95, sizeAttenuation: true }));
+      var bubbles = new THREE.Points(bGeo, new THREE.PointsMaterial({ color: 0xeef7ff, size: 0.0025, map: new THREE.CanvasTexture(dot), transparent: true, depthWrite: false, opacity: 0.95, sizeAttenuation: true }));
       bubbles.renderOrder = 6; bubbles.frustumCulled = false; scene.add(bubbles);
       for (var i = 0; i < NB; i++) { bLife[i] = 0; bPos[i * 3 + 1] = -10; }
       var glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(dot), color: 0xbfe0ff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
-      glow.scale.set(0.03, 0.03, 1); glow.renderOrder = 7; scene.add(glow);
+      glow.scale.set(0.016, 0.016, 1); glow.renderOrder = 7; scene.add(glow);
       var spawnAcc = 0, liveBubbles = 0;
       function stepBubbles(dt) {
         var tipY = -PROBE_TIP[probe] * MM, cz = 39.5 * MM, tr = TIP_R[probe] * MM;
         var floorY = tableY - TABLE_TOP * MM + BK.floor * MM, surf = floorY + liquidH * MM, rIn = (ri - 1) * MM;
         var active = run.state === 'running' && run.on && tipY < surf && tipY > floorY;
         glow.position.set(0, tipY - 0.004, cz);
-        glow.material.opacity += ((active ? 0.55 + Math.random() * 0.25 : 0) - glow.material.opacity) * 0.3;
-        if (active) spawnAcc += dt * (120 + run.power * 1.6);
+        glow.material.opacity += ((active ? 0.22 + Math.random() * 0.18 : 0) - glow.material.opacity) * 0.3;
+        if (active) spawnAcc += dt * (260 + run.power * 2.4);
         var n = Math.floor(spawnAcc); spawnAcc -= n; liveBubbles = 0;
         for (var i = 0; i < NB; i++) {
           var j = i * 3;
@@ -801,9 +806,9 @@ svg{width:18px;height:18px;flex:none}
             if (n > 0) { n--;
               var a = Math.random() * Math.PI * 2, rr = Math.sqrt(Math.random()) * tr;
               bPos[j] = Math.cos(a) * rr; bPos[j + 1] = tipY - 0.001; bPos[j + 2] = cz + Math.sin(a) * rr;
-              var sp = 0.04 + Math.random() * 0.12;
-              bVel[j] = (Math.random() - 0.5) * 0.06; bVel[j + 1] = -sp; bVel[j + 2] = (Math.random() - 0.5) * 0.06;
-              bLife[i] = 0.5 + Math.random() * 1.4;
+              var cloud = Math.random() < 0.6, sp = cloud ? 0.008 + Math.random() * 0.03 : 0.05 + Math.random() * 0.09;
+              bVel[j] = (Math.random() - 0.5) * (cloud ? 0.05 : 0.025); bVel[j + 1] = -sp; bVel[j + 2] = (Math.random() - 0.5) * (cloud ? 0.05 : 0.025);
+              bLife[i] = cloud ? 0.15 + Math.random() * 0.35 : 0.6 + Math.random() * 1.2;
             } else { continue; }
           }
           bLife[i] -= dt; liveBubbles++;
@@ -989,6 +994,7 @@ svg{width:18px;height:18px;flex:none}
         img.src = URL.createObjectURL(f); e.target.value = '';
       };
       drawOrderSign(); resize();
+      host._up400 = { camera: camera, controls: controls, invalidate: invalidate, tap: function (u, v) { tapScreen(u, v); }, screen: function () { return current; }, run: run, P: P, png: function () { return scr.toDataURL('image/png'); }, color: function () { return chamberMat && '#' + ledA.color.getHexString(); } };
 
       /* ---------- loop (draws only when something changed or moves) ---------- */
       var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1008,7 +1014,6 @@ svg{width:18px;height:18px;flex:none}
         simulate(dt);
         if (stepBubbles(dt)) dirty = Math.max(dirty, 1);
         stepSound();
-        sign.position.y = 0.33 + Math.sin(clock * 1.6) * 0.005; if (!reduce) dirty = Math.max(dirty, 1);
         if (flyTo) {
           var a = reduce ? 1 : 0.1;
           camera.fov += (flyTo.fov - camera.fov) * a; camera.updateProjectionMatrix(); applyFovLimits();
@@ -1026,7 +1031,7 @@ svg{width:18px;height:18px;flex:none}
   function mountAll() {
     Array.prototype.forEach.call(document.querySelectorAll('[data-up400-viewer]:not([data-up400-mounted])'), function (el) {
       el.setAttribute('data-up400-mounted', '');
-      try { Viewer(el); } catch (err) { console.error('UP-400 viewer:', err); }
+      try { Viewer(el); } catch (err) { console.error('UP-400 viewer:', err); el.textContent = 'UP-400 viewer error: ' + (err && err.message || err); }
     });
   }
   window.UP400Viewer = { mountAll: mountAll };
