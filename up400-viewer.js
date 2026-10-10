@@ -570,6 +570,11 @@ svg{width:18px;height:18px;flex:none}
         var clear = new THREE.Mesh(new THREE.ShapeGeometry(rrect(194 * MM, 394 * MM, 17 * MM), 10),
           new THREE.MeshPhysicalMaterial({ color: 0xe8f0ff, roughness: 0.04, metalness: 0, transparent: true, opacity: 0.06, envMapIntensity: 0.5, depthWrite: false }));
         clear.position.z = 157.4 * MM; clear.renderOrder = 3; clear.userData.noPick = true; g.add(clear);
+        // Topsonics logo printed on the frosted glass, right of the window (42 x 54 mm)
+        var logoTex = new THREE.TextureLoader().load(BASE + 'logo.png', invalidate); logoTex.encoding = THREE.sRGBEncoding; logoTex.anisotropy = 8;
+        var logo = new THREE.Mesh(new THREE.PlaneGeometry(42 * MM, 53.5 * MM), new THREE.MeshStandardMaterial({ map: logoTex, transparent: true, roughness: 0.35, metalness: 0,
+          polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -8 }));
+        logo.position.set(120.5 * MM, 163 * MM, 157.6 * MM); logo.renderOrder = 4; g.add(logo);
         return g;
       }
       var BK = { od: 80, h: 110, wall: 1.5, floor: 2, ml: 300 };
