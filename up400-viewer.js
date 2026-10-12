@@ -1,4 +1,4 @@
-/*! Topsonics UP-400 interactive 3D viewer · v2
+/*! Topsonics UHP-400 interactive 3D viewer · v3 (simple phone mode)
  * Mounts into every element with [data-up400-viewer]. Needs THREE r128 + GLTFLoader + OrbitControls + RoomEnvironment
  * loaded first. Assets are read from the folder this script is served from, or from data-base on the element.
  * Optional attributes: data-model (default device.glb), data-order-url (default: e-mail quote request). */
@@ -127,6 +127,17 @@ svg{width:18px;height:18px;flex:none}
 .narrow .f.top{transform:rotateX(90deg) translateZ(23px)}.narrow .f.bottom{transform:rotateX(-90deg) translateZ(23px)}
 .narrow .dial{transform:scale(.72);transform-origin:100% 100%;right:8px;bottom:30px}
 .narrow .cap{display:none}
+.narrow .panel,.narrow .tools,.narrow .dial{display:none}
+.narrow .stage canvas{touch-action:pan-y;cursor:default}
+.mbar{display:none}
+.narrow .mbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;position:absolute;left:10px;right:10px;bottom:10px;z-index:3;padding:10px;border-radius:16px}
+.mbtn{display:grid;justify-items:center;gap:4px;min-height:56px;padding:8px 2px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#e8eef5;font:600 11px/1.1 system-ui,sans-serif;cursor:pointer}
+.mbtn svg{width:22px;height:22px}
+.mbtn[aria-pressed="true"]{background:#2563eb;border-color:#60a5fa;color:#fff}
+.mbtn.run{background:linear-gradient(160deg,#3b82f6,#1d4ed8);border-color:rgba(255,255,255,.25)}
+.mbtn.run.on{background:linear-gradient(160deg,#f59e0b,#d97706)}
+.mhint{display:none}
+.narrow .mhint{display:block;position:absolute;left:12px;right:12px;top:12px;z-index:2;text-align:center;font:600 12px/1.3 system-ui,sans-serif;color:#334155}
 .narrow .toast{max-width:calc(100% - 28px);width:max-content;top:74px;border-radius:12px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 `;
@@ -139,7 +150,7 @@ svg{width:18px;height:18px;flex:none}
   <div class="panel glass" data-r="panel">
    <div class="p-head" data-r="phead">
     ${svg('grip', 'grip')}
-    <div class="p-title">UP-400 Ultrasonic Homogenizer<small>Drag to move · tap to open or close</small></div>
+    <div class="p-title">UHP-400 Ultrasonic Homogenizer<small>Drag to move · tap to open or close</small></div>
     <button class="p-tog" data-r="ptog" aria-label="Collapse panel" aria-expanded="true">${svg('chev')}</button>
    </div>
    <div class="p-body">
@@ -225,6 +236,17 @@ svg{width:18px;height:18px;flex:none}
    <div class="d-lab" data-r="dlab">Press ▶ to start</div>
   </div>
 
+  <div class="mhint" data-r="mhint">Tap the buttons below. Tap the touchscreen to use it.</div>
+  <div class="mbar glass" data-r="mbar">
+   <button class="mbtn" data-m="door" aria-pressed="false">${svg('door')}Door</button>
+   <button class="mbtn" data-m="up">${svg('up')}Table up</button>
+   <button class="mbtn" data-m="down">${svg('down')}Table down</button>
+   <button class="mbtn run" data-m="run">${svg('play')}Start</button>
+   <button class="mbtn" data-m="probe">${svg('probe')}Probe 7 mm</button>
+   <button class="mbtn" data-m="color"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="currentColor"/></svg>Colour</button>
+   <button class="mbtn" data-m="view">${svg('rotate')}Turn</button>
+   <button class="mbtn" data-m="light" aria-pressed="true">${svg('light')}Light</button>
+  </div>
   <div class="cap glass" data-r="cap"><b>Home.</b> Tap START on the screen, or press ▶ on the dial.</div>
   <div class="toast glass" data-r="toast"></div>
  </div>
@@ -271,7 +293,7 @@ svg{width:18px;height:18px;flex:none}
 
     var started = false, io = null;
     function go() { if (started) return; started = true; if (io) io.disconnect();
-      try { start(); } catch (err) { console.error('UP-400 viewer:', err); R('loading').hidden = false; R('loading').textContent = 'VIEWER ERROR: ' + (err && err.message || err); } }
+      try { start(); } catch (err) { console.error('UHP-400 viewer:', err); R('loading').hidden = false; R('loading').textContent = 'VIEWER ERROR: ' + (err && err.message || err); } }
     if (window.IntersectionObserver) {
       io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) go(); }, { rootMargin: '300px' });
       io.observe(host);
@@ -325,7 +347,7 @@ svg{width:18px;height:18px;flex:none}
 
       var dirty = 3; var invalidate = function () { dirty = Math.max(dirty, 3); };
       controls.addEventListener('change', invalidate);
-      function resize() { var w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); clampFloat(); invalidate(); }
+      function resize() { var w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; controls.enabled = !wrap.classList.contains('narrow'); renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); clampFloat(); invalidate(); }
       new ResizeObserver(resize).observe(stage);
 
       /* ---------- toast + caption ---------- */
@@ -345,7 +367,7 @@ svg{width:18px;height:18px;flex:none}
       });
 
       var P = { power: 200, duty: 50, time: 10, tmax: 60 };
-      var RANGE = { power: [0, 400, 10], duty: [10, 100, 5], time: [1, 30, 1], tmax: [20, 100, 1] };
+      var RANGE = { power: [0, 400, 10], duty: [5, 95, 5], time: [1, 30, 1], tmax: [20, 80, 1] };
       var SET_KEY = { power: 'power', duty: 'duty', time: 'time', temp: 'tmax' };
       var run = { state: 'ready', power: 200, t: 0, energy: 0, temp: 22, sample: 1, ignoreLimit: false, on: false };
       var lights = { ready: '#0a60ff', process: '#04ccff', pause: '#ff9f00', finish: '#03ff20', error: '#f80c00' };
@@ -655,7 +677,7 @@ svg{width:18px;height:18px;flex:none}
         if (c.body === null) frostMat.color.setHex(0xe9e5df); else frostMat.color.setHex(c.body).convertSRGBToLinear().lerp(new THREE.Color(1, 1, 1), 0.25);
         all('[data-color]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.color === name); });
         store('color', name); drawOrderSign(); invalidate();
-        if (!quiet) toast('UP-400 in ' + c.name, 1400);
+        if (!quiet) toast('UHP-400 in ' + c.name, 1400);
       }
       all('[data-color]').forEach(function (b) { b.onclick = function () { setColor(b.dataset.color); }; });
 
@@ -739,6 +761,26 @@ svg{width:18px;height:18px;flex:none}
       var flyTo = null;
       all('[data-face]').forEach(function (f) { f.onclick = function () { flyTo = VIEWS[f.dataset.face]; }; });
       R('home').onclick = function () { flyTo = VIEWS.iso; };
+      /* phone bar: buttons only, no pinch or drag */
+      var mViews = ['iso', 'front', 'right', 'back', 'left'], mView = 0, mColors = ['white', 'green', 'blue'];
+      function syncMbar() {
+        var b = root.querySelector('[data-m="run"]'), on = run.state === 'running';
+        b.classList.toggle('on', on); b.innerHTML = svg(on ? 'pause' : 'play') + (on ? 'Pause' : 'Start');
+        root.querySelector('[data-m="door"]').setAttribute('aria-pressed', doorTarget < -0.05);
+        root.querySelector('[data-m="light"]').setAttribute('aria-pressed', lightOn);
+        root.querySelector('[data-m="probe"]').innerHTML = svg('probe') + 'Probe ' + probe + ' mm';
+      }
+      all('[data-m]').forEach(function (b) { b.onclick = function () {
+        var m = b.dataset.m;
+        if (m === 'door') toggleDoor(); else if (m === 'up') raise(); else if (m === 'down') lower();
+        else if (m === 'run') R('run').onclick();
+        else if (m === 'probe') { setProbe(probe === 7 ? 15 : 7); toast(probe + ' mm probe fitted', 1400); }
+        else if (m === 'color') setColor(mColors[(mColors.indexOf(colorName) + 1) % 3]);
+        else if (m === 'view') { mView = (mView + 1) % mViews.length; flyTo = VIEWS[mViews[mView]]; }
+        else if (m === 'light') toggleLight();
+        syncMbar(); invalidate();
+      }; });
+      setInterval(syncMbar, 700);
       var spin = false;
       R('spin').onclick = function () { spin = !spin; R('spin').setAttribute('aria-pressed', spin); controls.autoRotate = spin; };
       controls.autoRotateSpeed = 1.2;
@@ -779,7 +821,7 @@ svg{width:18px;height:18px;flex:none}
       }
       function orderNow() {
         var url = host.getAttribute('data-order-url');
-        var cfg = 'UP-400 · ' + COLORS[colorName].name + ' · ' + probe + ' mm probe';
+        var cfg = 'UHP-400 · ' + COLORS[colorName].name + ' · ' + probe + ' mm probe';
         if (url) { window.location.href = url + (url.indexOf('?') < 0 ? '?' : '&') + 'config=' + encodeURIComponent(cfg); return; }
         var body = 'Hello Topsonics,\n\nPlease send me a quote for:\n' + cfg + '\n\nSample type:\nBatch volume:\nDelivery country:\n';
         toast('Opening an e-mail to info@topsonics.com', 2600);
@@ -887,6 +929,7 @@ svg{width:18px;height:18px;flex:none}
       var hoverEvt = null;
       stage.addEventListener('pointerdown', function (e) {
         if (e.target !== canvas) return;
+        if (wrap.classList.contains('narrow')) return;
         if (e.pointerType === 'mouse' && e.button !== 0) return;
         var h = pick(e), kind = h && kindOf(h.object);
         if (kind === 'door') {
@@ -921,7 +964,7 @@ svg{width:18px;height:18px;flex:none}
           }
         }
       });
-      function endDrag(e) { if (drag && e.pointerId === drag.id) { drag = null; controls.enabled = true; canvas.style.cursor = ''; } }
+      function endDrag(e) { if (drag && e.pointerId === drag.id) { drag = null; controls.enabled = !wrap.classList.contains('narrow'); canvas.style.cursor = ''; } }
       window.addEventListener('pointerup', endDrag); window.addEventListener('pointercancel', endDrag);
       var down = null;
       canvas.addEventListener('pointerdown', function (e) { down = [e.clientX, e.clientY]; });
@@ -1037,9 +1080,11 @@ svg{width:18px;height:18px;flex:none}
   function mountAll() {
     Array.prototype.forEach.call(document.querySelectorAll('[data-up400-viewer]:not([data-up400-mounted])'), function (el) {
       el.setAttribute('data-up400-mounted', '');
-      try { Viewer(el); } catch (err) { console.error('UP-400 viewer:', err); el.textContent = 'UP-400 viewer error: ' + (err && err.message || err); }
+      try { Viewer(el); } catch (err) { console.error('UHP-400 viewer:', err); el.textContent = 'UP-400 viewer error: ' + (err && err.message || err); }
     });
   }
-  window.UP400Viewer = { mountAll: mountAll };
+  function mount(el) { if (el.hasAttribute('data-up400-mounted')) return; el.setAttribute('data-up400-mounted', '');
+    try { Viewer(el); } catch (err) { console.error('UHP-400 viewer:', err); el.textContent = 'UHP-400 viewer error: ' + (err && err.message || err); } }
+  window.UP400Viewer = { mountAll: mountAll, mount: mount };
   mountAll();
 })();
