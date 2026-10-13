@@ -265,6 +265,41 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 .fa .stat b small{margin-left:3px}
 .fa .result b{direction:rtl}
 .fa .box li b{font-family:var(--body)}
+
+[hidden]{display:none!important}
+/* what you receive */
+.receive{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(28px,6vw,96px);align-items:center}
+.receive figure{margin:0}.receive img{width:100%;max-width:340px;border-radius:3px;margin:0 auto}
+.rlist{list-style:none;margin:24px 0 0;padding:0;border-top:1px solid var(--line)}
+.rlist li{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.rlist b{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:14px;flex:none}
+@media (max-width:640px){.receive{grid-template-columns:minmax(0,1fr)}.receive img{max-width:260px}}
+.qbtns{display:flex;flex-wrap:wrap;gap:10px}
+/* proforma */
+.pf-modal{position:fixed;inset:0;z-index:40;background:rgba(10,20,35,.55);display:grid;place-items:center;padding:16px}
+.pf-box{background:#fff;border-radius:4px;width:min(860px,100%);max-height:92vh;display:grid;grid-template-rows:auto 1fr;overflow:hidden}
+.pf-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.pf-bar span{display:flex;gap:8px}
+.pf-scroll{overflow:auto;background:#e9edf1;padding:16px}
+.pf-sheet{width:794px;min-height:1123px;margin:0 auto;background:#fff;color:#111;padding:48px 52px;font:400 14px/1.8 var(--body);direction:rtl;position:relative;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.pf-sheet .pf-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid var(--blue);padding-bottom:16px}
+.pf-sheet .pf-head img{width:64px;height:auto}
+.pf-sheet h1{font-size:24px;color:var(--navy);margin:0}
+.pf-sheet .meta{text-align:left;direction:rtl;font-size:13px;color:#333}
+.pf-sheet .parties{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.pf-sheet .parties div{border:1px solid #d5dbe1;border-radius:3px;padding:10px 14px}
+.pf-sheet .parties b{color:var(--navy)}
+.pf-sheet table{width:100%;border-collapse:collapse;margin-top:8px}
+.pf-sheet th,.pf-sheet td{border:1px solid #c9d1d9;padding:8px 10px;text-align:right;font-size:13.5px;width:auto;color:#111}
+.pf-sheet th{background:#eef3f8;color:var(--navy);font-weight:700}
+.pf-sheet td.n{text-align:left;direction:ltr;white-space:nowrap}
+.pf-sheet .tot td{font-weight:700}
+.pf-sheet .tot.grand td{background:#0f5aa5;color:#fff;font-size:15px}
+.pf-sheet .terms{margin-top:22px;font-size:12.5px;color:#333}
+.pf-sheet .terms li{margin-bottom:4px}
+.pf-sheet .sign{display:flex;justify-content:space-between;margin-top:42px;font-size:13px}
+.pf-sheet .stamp{border-top:1px solid #999;padding-top:6px;width:200px;text-align:center}
+.pf-sheet .wm{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;font:700 64px/1 var(--body);color:rgba(200,30,30,.10);transform:rotate(-24deg)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 
@@ -518,6 +553,31 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
     </div></div>
   </section>
 
+  <!-- WHAT YOU RECEIVE -->
+  <section class="paper" id="receive">
+    <div class="sec wrap"><div class="inner receive">
+      <figure>
+        <img src="crate.webp" alt="جعبهٔ چوبی حمل UHP-400 با قاب فلزی، دستهٔ طنابی و لوگوی حکاکی‌شده" width="660" height="750" loading="lazy">
+        <figcaption class="cap">جعبهٔ حمل UHP-400</figcaption>
+      </figure>
+      <div>
+        <div class="sec-head">
+          <p class="eyebrow">آنچه دریافت می‌کنید</p>
+          <h2>در یک جعبهٔ چوبی محکم، آمادهٔ نصب</h2>
+          <p>دستگاه در جعبهٔ چوبی با لبه‌های فلزی و دستهٔ حمل ارسال می‌شود تا در راه سالم برسد.</p>
+        </div>
+        <ul class="rlist">
+          <li><b>۱</b><span>هد کنترل با صفحهٔ لمسی ۵ اینچ</span></li>
+          <li><b>۲</b><span>محفظهٔ صوتی با در، پنجره و نور LED</span></li>
+          <li><b>۳</b><span>میز نمونهٔ قابل تنظیم با حلقهٔ سیلیکونی</span></li>
+          <li><b>۴</b><span>استک آکوستیک با پراب تیتانیومی ۷ یا ۱۵ میلی‌متر</span></li>
+          <li><b>۵</b><span>حسگر دمای داخلی</span></li>
+        </ul>
+        <p class="cap" style="text-align:start;margin-top:14px">عکس تک‌تک اقلام به‌زودی اضافه می‌شود.</p>
+      </div>
+    </div></div>
+  </section>
+
   <!-- VALUE -->
   <section class="sec wrap" id="value" style="background:var(--mist);position:relative">
     <div class="inner">
@@ -564,15 +624,10 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
           <p class="disclaimer">فقط برای نمایش. این ماشین‌حساب پیش‌فاکتور، پیشنهاد، تضمین عملکرد یا مشاورهٔ مالی نیست و سازنده هیچ مبلغی از عددهای نمایش‌داده‌شده را پرداخت، بازپرداخت یا تضمین نمی‌کند. زمان و هزینهٔ واقعی به نمونه‌ها، روش‌ها، قیمت‌های محلی و نحوهٔ استفاده از دستگاه بستگی دارد. سازنده هیچ ضمانت صریح یا ضمنی نمی‌دهد که شما به عددهای واردشده برسید.</p>
         </form>
         <div class="box">
-          <h3>اجزای دستگاه</h3>
-          <p>بخش‌هایی که همراه هم می‌آیند، تا چیز اضافه‌ای لازم نباشد.</p>
-          <ul>
-            <li><b>۱</b>هد کنترل با صفحهٔ لمسی ۵ اینچ</li>
-            <li><b>۲</b>محفظهٔ صوتی با در، پنجره و نور LED</li>
-            <li><b>۳</b>میز نمونهٔ قابل تنظیم</li>
-            <li><b>۴</b>استک آکوستیک با پراب تیتانیومی ۷ یا ۱۵ میلی‌متر</li>
-            <li><b>۵</b>حسگر دمای داخلی</li>
-          </ul>
+          <h3>پیش‌فاکتور فوری</h3>
+          <p>پراب و رنگ را انتخاب کنید و همان لحظه پیش‌فاکتور رسمی را به‌صورت PDF بگیرید.</p>
+          <div style="margin-top:18px"><a class="btn solid" href="#quote">دریافت پیش‌فاکتور</a></div>
+        </div>
         </div>
       </div>
     </div>
@@ -601,19 +656,20 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
     </div></div>
     <div class="sec wrap" id="quote" style="background:var(--mist)"><div class="inner quote">
       <div>
-        <p class="eyebrow">استعلام قیمت</p>
-        <h2 style="margin-top:14px">دربارهٔ نمونه‌تان بگویید</h2>
-        <p style="color:var(--mute);margin-top:16px;max-width:40ch">پراب مناسب، قیمت و زمان تحویل را برایتان می‌فرستیم.</p>
+        <p class="eyebrow">پیش‌فاکتور فوری</p>
+        <h2 style="margin-top:14px">پیش‌فاکتور خود را همین حالا بگیرید</h2>
+        <p style="color:var(--mute);margin-top:16px;max-width:40ch">مشخصات را وارد کنید؛ پیش‌فاکتور با شماره و تاریخ ساخته می‌شود و می‌توانید PDF آن را دانلود کنید.</p>
         <div class="contact"><span>واتس‌اپ و تلگرام <b dir="ltr">+98 912 383 0551</b></span><span>تماس <b dir="ltr">+98 912 383 0551</b></span></div>
       </div>
       <form class="qform" id="qform">
-        <label for="q-sample">نوع نمونه<input id="q-sample" placeholder="مثلاً TiO₂ در آب"></label>
-        <label for="q-vol">حجم هر بچ (میلی‌لیتر)<input id="q-vol" type="number" min="0" inputmode="decimal" placeholder="مثلاً ۲۵۰"></label>
-        <label for="q-app">کاربرد<select id="q-app"><option>پراکنش</option><option>امولسیون</option><option>استخراج</option><option>لیز سلولی</option><option>سایر</option></select></label>
+        <label for="q-name">نام و نام خانوادگی<input id="q-name" required autocomplete="name"></label>
+        <label for="q-mobile">شمارهٔ موبایل<input id="q-mobile" required inputmode="tel" dir="ltr" placeholder="09xx xxx xxxx" autocomplete="tel"></label>
+        <label for="q-org" class="full">دانشگاه یا شرکت<input id="q-org" autocomplete="organization"></label>
         <label for="q-city">شهر<input id="q-city"></label>
-        <label for="q-org" class="full">دانشگاه یا شرکت<input id="q-org"></label>
-        <label for="q-name" class="full">نام و شمارهٔ تماس<input id="q-name" required></label>
-        <div class="full"><button class="btn solid" type="submit">ارسال درخواست در واتس‌اپ</button></div>
+        <label for="q-qty">تعداد دستگاه<input id="q-qty" type="number" min="1" max="20" value="1" inputmode="numeric"></label>
+        <label for="q-probe">پراب<select id="q-probe"><option value="7">پراب ۷ میلی‌متر</option><option value="15" selected>پراب ۱۵ میلی‌متر</option><option value="both">هر دو پراب (۷ و ۱۵)</option></select></label>
+        <label for="q-color">رنگ بدنه<select id="q-color"><option>سفید</option><option>سبز</option><option>آبی</option></select></label>
+        <div class="full qbtns"><button class="btn solid" type="submit">ساخت پیش‌فاکتور</button><a class="btn" id="q-wa" href="https://wa.me/989123830551" target="_blank" rel="noopener">سؤال دارم، واتس‌اپ</a></div>
         <p class="qmsg" id="qmsg" role="status"></p>
       </form>
     </div></div>
@@ -622,6 +678,12 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 </main>
 
 <div class="tag" id="tag"><i></i><em id="tagText"></em></div>
+<div class="pf-modal" id="pfModal" hidden>
+  <div class="pf-box" role="dialog" aria-modal="true" aria-labelledby="pfTitle">
+    <div class="pf-bar"><b id="pfTitle">پیش‌فاکتور شما</b><span><button class="btn solid" type="button" id="pfDownload">دانلود PDF</button><button class="btn" type="button" id="pfClose">بستن</button></span></div>
+    <div class="pf-scroll"><div class="pf-sheet" id="pfSheet"></div></div>
+  </div>
+</div>
 <div class="fab" id="fab">
   <button class="fab-main" id="fabMain" type="button" aria-expanded="false" aria-controls="fabList" aria-label="تماس با ما">
     <svg class="chat" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm3 6.2a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6zm5 0a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6zm5 0a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6z"/></svg>
@@ -651,12 +713,67 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
   }
   document.getElementById('calc').addEventListener('input', calc); calc();
 
+  /* ---------- instant proforma (prices and terms in PF below; the WordPress version reads them from the admin) ---------- */
+  var PF = {
+    sample: true,                        /* true = example prices, prints a "sample" watermark */
+    currency: 'تومان',
+    vat: 0.10,
+    validDays: 3,
+    items: {
+      base:    { name: 'هموژنایزر اولتراسونیک UHP-400 با محفظهٔ صوتی، میز نمونه و حسگر دما', price: 350000000 },
+      probe7:  { name: 'پراب تیتانیومی ۷ میلی‌متر', price: 0 },
+      probe15: { name: 'پراب تیتانیومی ۱۵ میلی‌متر', price: 0 },
+      extra:   { name: 'پراب دوم', price: 25000000 }   /* price of a second probe */
+    },
+    seller: { name: 'شرکت توسعه فناوری مافوق صوت', phone: '۰۹۱۲۳۸۳۰۵۵۱', web: 'ultrasonic.co.ir' }
+  };
+  var faNum = function (n) { return new Intl.NumberFormat('fa-IR', { maximumFractionDigits: 0 }).format(n); };
+  var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var pfNumber = '';
+  function buildProforma() {
+    var f = function (id) { return document.getElementById(id).value.trim(); };
+    var qty = Math.max(1, Math.min(20, parseInt(f('q-qty'), 10) || 1)), probe = f('q-probe'), color = f('q-color');
+    var main = probe === '7' ? PF.items.probe7 : PF.items.probe15;
+    var rows = [{ name: PF.items.base.name + '، همراه ' + main.name + '، رنگ ' + color, q: qty, p: PF.items.base.price + main.price }];
+    if (probe === 'both') rows.push({ name: PF.items.probe7.name + ' (پراب دوم)', q: qty, p: PF.items.extra.price });
+    var sub = rows.reduce(function (t, r) { return t + r.q * r.p; }, 0), vat = Math.round(sub * PF.vat), total = sub + vat;
+    var now = new Date(), until = new Date(now.getTime() + PF.validDays * 864e5);
+    var jd = function (d) { return new Intl.DateTimeFormat('fa-IR-u-ca-persian', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(d); };
+    pfNumber = 'UHP-' + now.toISOString().slice(2, 10).replace(/-/g, '') + '-' + String(Math.floor(Math.random() * 9000) + 1000);
+    var tr = rows.map(function (r, i) { return '<tr><td>' + faNum(i + 1) + '</td><td>' + esc(r.name) + '</td><td>' + faNum(r.q) + '</td><td class="n">' + (r.p ? faNum(r.p) : 'شامل') + '</td><td class="n">' + (r.p ? faNum(r.q * r.p) : '—') + '</td></tr>'; }).join('');
+    document.getElementById('pfSheet').innerHTML =
+      (PF.sample ? '<div class="wm">نمونه · قیمت‌ها آزمایشی است</div>' : '') +
+      '<div class="pf-head"><div><h1>پیش‌فاکتور</h1><div>' + esc(PF.seller.name) + '</div></div><img src="' + BASE + 'logo.png" alt=""><div class="meta">شماره: <span dir="ltr">' + pfNumber + '</span><br>تاریخ: ' + jd(now) + '<br>اعتبار تا: ' + jd(until) + '</div></div>' +
+      '<div class="parties"><div><b>فروشنده</b><br>' + esc(PF.seller.name) + '<br>تلفن: ' + PF.seller.phone + '<br>' + PF.seller.web + '</div>' +
+      '<div><b>خریدار</b><br>' + esc(f('q-name')) + (f('q-org') ? '<br>' + esc(f('q-org')) : '') + '<br>موبایل: <span dir="ltr">' + esc(f('q-mobile')) + '</span>' + (f('q-city') ? '<br>شهر: ' + esc(f('q-city')) : '') + '</div></div>' +
+      '<table><thead><tr><th>ردیف</th><th>شرح کالا</th><th>تعداد</th><th>قیمت واحد (' + PF.currency + ')</th><th>مبلغ (' + PF.currency + ')</th></tr></thead><tbody>' + tr +
+      '<tr class="tot"><td colspan="4">جمع</td><td class="n">' + faNum(sub) + '</td></tr>' +
+      '<tr class="tot"><td colspan="4">مالیات بر ارزش افزوده (' + faNum(PF.vat * 100) + '٪)</td><td class="n">' + faNum(vat) + '</td></tr>' +
+      '<tr class="tot grand"><td colspan="4">مبلغ قابل پرداخت</td><td class="n">' + faNum(total) + '</td></tr></tbody></table>' +
+      '<ol class="terms"><li>این پیش‌فاکتور تا ' + faNum(PF.validDays) + ' روز از تاریخ صدور معتبر است و پس از آن قیمت‌ها ممکن است تغییر کند.</li><li>شرایط پرداخت، زمان تحویل و حمل پس از تماس کارشناس فروش قطعی می‌شود.</li><li>این سند به‌صورت خودکار از وب‌سایت صادر شده و پس از تأیید فروشنده و پرداخت، سفارش قطعی است.</li></ol>' +
+      '<div class="sign"><div class="stamp">مهر و امضای فروشنده</div><div class="stamp">امضای خریدار</div></div>';
+  }
+  var pfModal = document.getElementById('pfModal');
   document.getElementById('qform').addEventListener('submit', function (e) {
     e.preventDefault();
-    var f = function (id) { return document.getElementById(id).value.trim(); };
-    var body = 'درخواست قیمت UHP-400\nنوع نمونه: ' + f('q-sample') + '\nحجم هر بچ (میلی‌لیتر): ' + f('q-vol') + '\nکاربرد: ' + f('q-app') + '\nشهر: ' + f('q-city') + '\nدانشگاه یا شرکت: ' + f('q-org') + '\nنام و تماس: ' + f('q-name');
-    var a = document.createElement('a'); a.href = 'https://wa.me/989123830551?text=' + encodeURIComponent(body); a.target = '_blank'; a.rel = 'noopener'; a.click();
-    document.getElementById('qmsg').textContent = 'واتس‌اپ با متن درخواست باز می‌شود. اگر باز نشد، با شمارهٔ ۰۹۱۲۳۸۳۰۵۵۱ تماس بگیرید یا در تلگرام پیام بدهید.';
+    var mob = document.getElementById('q-mobile').value.replace(/[^\d۰-۹]/g, '');
+    if (mob.length < 10) { document.getElementById('qmsg').textContent = 'لطفاً شمارهٔ موبایل را کامل وارد کنید.'; return; }
+    buildProforma(); pfModal.hidden = false; document.getElementById('qmsg').textContent = '';
+  });
+  document.getElementById('pfClose').addEventListener('click', function () { pfModal.hidden = true; });
+  function loadLib(src, ok) { var sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = function () { document.getElementById('pfDownload').textContent = 'دانلود ممکن نشد'; }; document.head.appendChild(sc); }
+  document.getElementById('pfDownload').addEventListener('click', function () {
+    var btn = this; btn.textContent = 'در حال ساخت PDF…';
+    var go = function () {
+      window.html2canvas(document.getElementById('pfSheet'), { scale: 2, backgroundColor: '#ffffff' }).then(function (cv) {
+        var pdf = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+        pdf.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, 210, 210 * cv.height / cv.width);
+        pdf.save('proforma-' + pfNumber + '.pdf'); btn.textContent = 'دانلود PDF';
+      }).catch(function () { btn.textContent = 'دانلود ممکن نشد'; });
+    };
+    var LIB = window.__UHP_LIB || 'https://cdnjs.cloudflare.com/ajax/libs/';
+    var needJs = function () { if (window.jspdf) go(); else loadLib(LIB + 'jspdf/2.5.1/jspdf.umd.min.js', go); };
+    if (window.html2canvas) needJs(); else loadLib(LIB + 'html2canvas/1.4.1/html2canvas.min.js', needJs);
   });
 
   var vids = [].slice.call(document.querySelectorAll('video[data-auto]'));
