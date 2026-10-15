@@ -53,7 +53,7 @@
 
   /* ---------- instant proforma (prices and terms in PF below; the WordPress version reads them from the admin) ---------- */
   var PF = {
-    sample: true,                        /* true = example prices, prints a "sample" watermark */
+    sample: false,                       /* true = example prices, prints a "sample" watermark */
     currency: 'تومان',
     vat: 0.10,
     validDays: 3,
@@ -61,7 +61,7 @@
       base:    { name: 'هموژنایزر اولتراسونیک UHP-400 با محفظهٔ صوتی، میز نمونه و حسگر دما', price: 350000000 },
       probe7:  { name: 'پراب تیتانیومی ۷ میلی‌متر', price: 0 },
       probe15: { name: 'پراب تیتانیومی ۱۵ میلی‌متر', price: 0 },
-      extra:   { name: 'پراب دوم', price: 25000000 }   /* price of a second probe */
+      extra:   { name: 'پراب دوم', price: 40000000 }   /* price of a second probe */
     },
     seller: { name: 'شرکت توسعه فناوری مافوق صوت', phone: '۰۹۱۲۳۸۳۰۵۵۱', web: 'ultrasonic.co.ir' }
   };
