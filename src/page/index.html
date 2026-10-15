@@ -211,7 +211,8 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 .simple .scene .step:first-child{padding-top:56px}
 
 /* floating contact buttons */
-.fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:12px}
+.fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:12px;pointer-events:none}
+.fab-main{pointer-events:auto}
 .fab-main{width:60px;height:60px;border-radius:50%;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 22px rgba(0,55,97,.3);transition:transform .25s,background .25s}
 .fab-main:hover{background:var(--navy)}
 .fab-main svg{width:28px;height:28px;transition:transform .25s,opacity .2s;grid-area:1/1}

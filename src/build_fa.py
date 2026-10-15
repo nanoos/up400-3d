@@ -41,4 +41,7 @@ out=head.replace('[data-uhp-page]','[data-uhp-page-fa]')+'  var FONTS = '+json.d
 ASSET=open('/home/claude/gosite-page/ASSET_SHA').read().strip()
 out=re.sub(r"var BASE = me \? [^;]*;", "var BASE = me ? 'https://cdn.jsdelivr.net/gh/nanoos/up400-3d@"+ASSET+"/page/' : '';", out)
 assert ASSET in out
+out=re.sub(r"(var BASE = me \? [^;]*;)", r"\1\n  var CBASE = me ? me.replace(/[^\\/]*$/, '').replace(/page\\/$/, '') : '';", out, count=1)
+assert out.count("VBASE + 'up400-viewer.js'")>=1
+out=out.replace("VBASE + 'up400-viewer.js'", "CBASE + 'up400-viewer.js'")
 open('/home/claude/gosite-page/page/uhp-page-fa.js','w').write(out); print('ok',len(out))

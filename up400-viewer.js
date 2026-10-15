@@ -236,7 +236,7 @@ svg{width:18px;height:18px;flex:none}
    <div class="d-lab" data-r="dlab">Press ▶ to start</div>
   </div>
 
-  <div class="mhint" data-r="mhint">Tap the buttons below. Tap the touchscreen to use it.</div>
+  <div class="mhint" data-r="mhint">Tap the buttons below. Pinch with two fingers to zoom and turn.</div>
   <div class="mbar glass" data-r="mbar">
    <button class="mbtn" data-m="door" aria-pressed="false">${svg('door')}Door</button>
    <button class="mbtn" data-m="up">${svg('up')}Table up</button>
@@ -322,6 +322,7 @@ svg{width:18px;height:18px;flex:none}
       var fovFactor = function (fov) { return Math.tan(15 * Math.PI / 180) / Math.tan(fov / 2 * Math.PI / 180); };
       var VIEWS = {
         iso:    { dir: [-1, 1, 1],        dist: 1.85, fov: 12 },
+        phone:  { dir: [0.55, 0.32, 1],   dist: 1.85, fov: 16 },
         front:  { dir: [0, 0.07, 1],      dist: 1.75, fov: 30 },
         back:   { dir: [0.0, 0.12, -1],   dist: 1.75, fov: 30 },
         left:   { dir: [-1, 0.1, 0.02],   dist: 1.75, fov: 30 },
@@ -329,6 +330,7 @@ svg{width:18px;height:18px;flex:none}
         top:    { dir: [0, 1, 0.02],      dist: 1.75, fov: 30 },
         bottom: { dir: [0, -1, 0.02],     dist: 1.75, fov: 30 }
       };
+      function homeView() { return host.clientWidth < 700 ? VIEWS.phone : VIEWS.iso; }
       function fit() { var a = camera.aspect || 1; return a < 1 ? Math.min(1.9, Math.max(1, 0.95 / a)) : 1; }
       function viewPos(v) { return new THREE.Vector3(v.dir[0], v.dir[1], v.dir[2]).normalize().multiplyScalar(v.dist * fovFactor(v.fov) * fit()).add(controls.target); }
       camera.position.copy(viewPos(VIEWS.iso));
@@ -685,7 +687,7 @@ svg{width:18px;height:18px;flex:none}
         var b = beaker(); b.position.set(0, -TABLE_TOP * MM, 39.5 * MM); tableNode.add(b);
         R('loading').hidden = true;
         setProbe(7); update(); applyLight(); setColor(store('color') || 'white', true); show('start', true);
-        resize(); camera.position.copy(viewPos(VIEWS.iso)); applyFovLimits(); invalidate();
+        resize(); var v0 = homeView(); camera.fov = v0.fov; camera.updateProjectionMatrix(); camera.position.copy(viewPos(v0)); applyFovLimits(); invalidate();
       }, undefined, function (err) { R('loading').hidden = false; R('loading').textContent = 'THE 3D MODEL COULD NOT LOAD (' + BASE + MODEL + ')'; console.error(err); });
 
       /* ---------- colors ---------- */
@@ -781,9 +783,9 @@ svg{width:18px;height:18px;flex:none}
       /* ---------- view cube, tools ---------- */
       var flyTo = null;
       all('[data-face]').forEach(function (f) { f.onclick = function () { flyTo = VIEWS[f.dataset.face]; }; });
-      R('home').onclick = function () { flyTo = VIEWS.iso; };
+      R('home').onclick = function () { flyTo = homeView(); };
       /* phone bar: buttons only, no pinch or drag */
-      var mViews = ['iso', 'front', 'right', 'back', 'left'], mView = 0, mColors = ['white', 'green', 'blue'];
+      var mViews = ['phone', 'front', 'right', 'back', 'left'], mView = 0, mColors = ['white', 'green', 'blue'];
       function syncMbar() {
         var b = root.querySelector('[data-m="run"]'), on = run.state === 'running';
         b.classList.toggle('on', on); b.innerHTML = svg(on ? 'pause' : 'play') + (on ? 'Pause' : 'Start');
@@ -988,6 +990,28 @@ svg{width:18px;height:18px;flex:none}
       function endDrag(e) { if (drag && e.pointerId === drag.id) { drag = null; controls.enabled = !wrap.classList.contains('narrow'); canvas.style.cursor = ''; } }
       window.addEventListener('pointerup', endDrag); window.addEventListener('pointercancel', endDrag);
       var down = null;
+      /* phones: two fingers zoom (pinch) and turn the device; one finger still scrolls the page */
+      var pinch = null;
+      function tdist(t) { return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY); }
+      function tmid(t) { return [(t[0].clientX + t[1].clientX) / 2, (t[0].clientY + t[1].clientY) / 2]; }
+      canvas.addEventListener('touchstart', function (e) {
+        if (!wrap.classList.contains('narrow') || e.touches.length !== 2) return;
+        e.preventDefault(); flyTo = null; pinch = { d: tdist(e.touches), m: tmid(e.touches) };
+      }, { passive: false });
+      canvas.addEventListener('touchmove', function (e) {
+        if (!pinch || e.touches.length !== 2) return;
+        e.preventDefault();
+        var d = tdist(e.touches), m = tmid(e.touches), off = camera.position.clone().sub(controls.target);
+        var sph = new THREE.Spherical().setFromVector3(off);
+        sph.radius = Math.max(controls.minDistance, Math.min(controls.maxDistance, sph.radius * pinch.d / Math.max(d, 1)));
+        var h = canvas.clientHeight || 400;
+        sph.theta -= 2 * Math.PI * (m[0] - pinch.m[0]) / h;
+        sph.phi = Math.max(0.15, Math.min(Math.PI / 2 + 0.25, sph.phi - 2 * Math.PI * (m[1] - pinch.m[1]) / h));
+        camera.position.copy(controls.target).add(off.setFromSpherical(sph)); camera.lookAt(controls.target);
+        pinch.d = d; pinch.m = m; invalidate();
+      }, { passive: false });
+      var endPinch = function (e) { if (pinch && e.touches.length < 2) pinch = null; };
+      canvas.addEventListener('touchend', endPinch); canvas.addEventListener('touchcancel', endPinch);
       canvas.addEventListener('pointerdown', function (e) { down = [e.clientX, e.clientY]; });
       canvas.addEventListener('pointerup', function (e) {
         if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) return;
