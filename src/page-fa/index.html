@@ -715,6 +715,7 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 
   /* ---------- instant proforma (prices and terms in PF below; the WordPress version reads them from the admin) ---------- */
   var PF = {
+    saveUrl: window.__UHP_SAVE_URL || '',                      /* Google Apps Script web-app URL (…/exec). Empty = customer details are not saved */
     sample: false,                       /* true = example prices, prints a "sample" watermark */
     currency: 'تومان',
     vat: 0.10,
@@ -752,6 +753,13 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
       '<tr class="tot grand"><td colspan="4">مبلغ قابل پرداخت</td><td class="n">' + faNum(total) + '</td></tr></tbody></table>' +
       '<ol class="terms"><li>این پیش‌فاکتور تا ' + faNum(PF.validDays) + ' روز از تاریخ صدور معتبر است و پس از آن قیمت‌ها ممکن است تغییر کند.</li><li>شرایط پرداخت، زمان تحویل و حمل پس از تماس کارشناس فروش قطعی می‌شود.</li><li>این سند به‌صورت خودکار از وب‌سایت صادر شده و پس از تأیید فروشنده و پرداخت، سفارش قطعی است.</li></ol>' +
       '<div class="sign"><div class="stamp">مهر و امضای فروشنده</div><div class="stamp">امضای خریدار</div></div>';
+    saveLead({ time: now.toISOString(), number: pfNumber, name: f('q-name'), mobile: f('q-mobile'), org: f('q-org'), city: f('q-city'),
+      qty: qty, probe: probe, color: color, subtotal: sub, vat: vat, total: total, page: location.href });
+  }
+  /* fire-and-forget: a failed save never blocks the proforma or the PDF */
+  function saveLead(d) {
+    if (!PF.saveUrl || !window.fetch) return;
+    try { fetch(PF.saveUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(d) }).catch(function () {}); } catch (err) {}
   }
   var pfModal = document.getElementById('pfModal');
   document.getElementById('qform').addEventListener('submit', function (e) {
