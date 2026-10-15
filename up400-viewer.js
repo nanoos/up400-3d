@@ -633,7 +633,28 @@ svg{width:18px;height:18px;flex:none}
       var doorAngle = 0, tableY = -PITCH * K_WORK * MM, drag = null;
       var mats = { body: [], head: [] }, baseColor = new Map();
 
-      new THREE.GLTFLoader().load(BASE + MODEL, function (gltf) {
+      /* glTF loader with Draco support (the decoder loads itself on first use) */
+      var DRACO_JS = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js';
+      var DRACO_LIB = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/';
+      var dracoWait = null;
+      function uhpLoader() {
+        return { load: function (url, onLoad, onProgress, onError) {
+          var run = function () {
+            var l = new THREE.GLTFLoader();
+            if (THREE.DRACOLoader) { var d = new THREE.DRACOLoader(); d.setDecoderPath(DRACO_LIB); l.setDRACOLoader(d); }
+            l.load(url, onLoad, onProgress, onError);
+          };
+          if (THREE.DRACOLoader) return run();
+          if (!dracoWait) {
+            dracoWait = [];
+            var s = document.createElement('script'); s.src = DRACO_JS;
+            s.onload = s.onerror = function () { var q = dracoWait; dracoWait = []; q.forEach(function (f) { f(); }); };
+            document.head.appendChild(s);
+          }
+          dracoWait.push(run);
+        } };
+      }
+      uhpLoader().load(BASE + MODEL, function (gltf) {
         model = gltf.scene;
         model.traverse(function (o) {
           if (!o.isMesh) return;
