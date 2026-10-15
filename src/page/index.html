@@ -149,7 +149,7 @@ td{font-size:16px;color:var(--ink)}
 .colours figure{margin:0}
 .colours img{width:100%;aspect-ratio:1200/681;object-fit:cover;border-radius:3px}
 .colours figcaption{padding-top:8px;font-size:14px;color:var(--mute)}
-@media (max-width:760px){.ggrid{grid-template-columns:repeat(2,minmax(0,1fr))}.ggrid img{height:190px}.colours{gap:8px}.colours figcaption{font-size:12px}}
+@media (max-width:760px){.ggrid{grid-template-columns:repeat(2,minmax(0,1fr))}.ggrid img{height:190px}.colours{gap:6px;margin-inline:-14px}.colours img{aspect-ratio:3/4;object-fit:cover;object-position:50% 45%}.colours figcaption{font-size:12px;text-align:center}}
 
 /* value + calculator */
 .vcols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,5vw,72px);margin-top:40px}
@@ -236,7 +236,7 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 .p3d .hero-text{max-width:none}
 .p3d .hero h1{font-size:54px}
 .p3d .scene .step,.p3d .scene .step:first-child{min-height:100vh;min-height:100svh;align-items:flex-end;padding-bottom:88px}
-.p3d .step .card{max-width:none;width:100%;padding:18px 20px;background:rgba(255,255,255,.95)}
+.p3d .step .card{max-width:none;width:100%;padding:18px 20px;background:rgba(255,255,255,.7);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .p3d .step h2{font-size:28px}.p3d .step h3{font-size:24px}.p3d .step p{font-size:16px}
 .p3d .tag em{font-size:12px}
 .p3d .tag.probe em b{font-size:24px}
@@ -251,6 +251,17 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 .faq summary::after{content:"+";position:absolute;inset-inline-end:4px;top:12px;font-size:24px;line-height:1;color:var(--blue);transition:transform .2s}
 .faq details[open] summary::after{transform:rotate(45deg)}
 .faq details p{margin:0 0 18px;color:var(--mute);max-width:75ch;font-size:15.5px;line-height:1.7}
+/* phone bottom bar (replaces the floating contact button on phones) */
+.sbar{display:none}
+@media (max-width:640px){
+.sbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:31;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+.sbar a{display:grid;justify-items:center;gap:3px;padding:4px 0;color:var(--ink);text-decoration:none;font-size:11.5px;font-weight:600}
+.sbar svg{width:22px;height:22px}
+.sbar a.q{color:var(--blue)}
+.fab{display:none}
+footer.wrap{padding-bottom:84px}
+.p3d .scene .step,.p3d .scene .step:first-child{padding-bottom:104px}
+}
 </style>
 
 <header class="nav" id="nav">
@@ -610,6 +621,7 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 </main>
 
 <div class="tag" id="tag"><i></i><em id="tagText"></em></div>
+<nav class="sbar" aria-label="Quick actions"><a href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m6 15 6-6 6 6"/></svg><span>Top</span></a><a href="https://wa.me/37066302479?text=Hello%20Topsonics%2C%20I%20am%20interested%20in%20the%20UHP-400." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 5h16v11H9l-5 4z"/></svg><span>WhatsApp</span></a><a href="mailto:info@topsonics.com?subject=UHP-400%20enquiry"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 6h18v12H3z"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="m3 7 9 7 9-7"/></svg><span>Email</span></a><a class="q" href="#quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M6 3h9l4 4v14H6z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M9 11h7M9 15h7M14 3v5h5"/></svg><span>Get a quote</span></a></nav>
 <div class="fab" id="fab">
   <button class="fab-main" id="fabMain" type="button" aria-expanded="false" aria-controls="fabList" aria-label="Contact Topsonics">
     <svg class="chat" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm3 6.2a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6zm5 0a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6zm5 0a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6z"/></svg>
@@ -887,8 +899,8 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
       { az: 6, el: 8, dist: 2.25, t: C },
       { az: 16, el: 8, dist: 2.05, t: C, door: 1 },
       { az: 14, el: 6, dist: 1.8, t: [0, 0.04, 0.03], door: 1, table: 1 },
-      { az: 12, el: 3, dist: 1.05, t: [0, 0.1, 0.04], door: 1, table: 1, ptag: 1 },
-      { az: 14, el: 3, dist: 1.05, t: [0, 0.09, 0.04], door: 1, table: 1, p15: 1, ptag: 1 },
+      { az: 12, el: 3, dist: 1.05, t: [0, 0.1, 0.04], door: 1, table: 1, ptag: 1, pd: 0.7 },
+      { az: 14, el: 3, dist: 1.05, t: [0, 0.09, 0.04], door: 1, table: 1, p15: 1, ptag: 1, pd: 0.7 },
       { az: 3, el: 9, dist: 0.6, t: LCD, table: 1, run: 1, scrs: ['duty', 'temp'] },
       { az: 3, el: 9, dist: 0.6, t: LCD, table: 1, scr: 'save' }
     ],
@@ -897,14 +909,14 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
       { az: 12, el: 7, dist: 1.25, t: [0, 0.37, 0.05], fo: 'head', lift: 1 },
       { az: 16, el: 4, dist: 1.25, t: [0, 0.18, 0.04], fo: 'stack' },
       { az: 22, el: 6, dist: 1.95, t: [-0.04, 0.05, 0.12], fo: 'door', door: 0.35 },
-      { az: 14, el: 14, dist: 1.45, t: [0, 0.0, 0.05], fo: 'table', table: 0.6 },
+      { az: 14, el: 14, dist: 1.45, t: [0, 0.0, 0.05], fo: 'table', table: 0.6, pd: 0.72 },
       { az: 18, el: 8, dist: 2.2, t: [0, 0.06, 0], fo: 'body' },
       { az: 10, el: 6, dist: 2.2, t: [0.15, 0.13, 0.04], fo: 'back', ex: 1 },
       { az: 8, el: 8, dist: 2.35, t: C }
     ]
   };
-  var NUM = ['az', 'el', 'dist', 'door', 'table', 'run', 'ex', 'lift', 'p15', 'hero', 'ptag'];
-  var DEF = { az: 0, el: 0, dist: 2, t: C, door: 0, table: 0, run: 0, ex: 0, lift: 0, p15: 0, hero: 0, ptag: 0, scr: 'start', scrs: null, fo: null };
+  var NUM = ['az', 'el', 'dist', 'door', 'table', 'run', 'ex', 'lift', 'p15', 'hero', 'ptag', 'pd'];
+  var DEF = { pd: 1, az: 0, el: 0, dist: 2, t: C, door: 0, table: 0, run: 0, ex: 0, lift: 0, p15: 0, hero: 0, ptag: 0, scr: 'start', scrs: null, fo: null };
   Object.keys(SCENES).forEach(function (k) { SCENES[k] = SCENES[k].map(function (s) { var o = {}; for (var d in DEF) o[d] = s[d] !== undefined ? s[d] : DEF[d]; return o; }); });
 
   var BACK_EX = [0.36, -0.02, 0.12];
@@ -962,13 +974,13 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
     var narrow = innerWidth <= 640, w = innerWidth, h = innerHeight, fit;
     var T = forced || reduce ? 0 : clock;
     if (forced) { camera.clearViewOffset(); fit = 1.12 * Math.max(1, 0.95 / camera.aspect); }
-    else if (narrow) { camera.setViewOffset(w, h, 0, h * 0.17, w, h); fit = Math.max(1.15, 0.78 / camera.aspect); }
+    else if (narrow) { camera.setViewOffset(w, h, 0, h * (0.17 - 0.09 * st.hero), w, h); fit = Math.max(1.15, 0.78 / camera.aspect); }
     else { camera.setViewOffset(w, h, -w * (w < 1000 ? 0.24 : 0.2), -h * 0.02, w, h); fit = Math.max(1.12, 0.66 / camera.aspect); }
 
     /* slow motion only: the hero swings left and right in front; every other view breathes a few degrees */
     var az = st.az + st.hero * 16 * Math.sin(T * 0.35) + (1 - st.hero) * 2.5 * Math.sin(T * 0.45);
     var el = st.el + 0.8 * Math.sin(T * 0.3);
-    var d = st.dist * fit * (narrow ? 1 + 0.22 * (1 - st.hero) : 1);
+    var d = st.dist * fit * (narrow ? (1 + 0.22 * (1 - st.hero)) * st.pd : 1);
     camera.position.set(
       st.t[0] + d * Math.sin(az * D2R) * Math.cos(el * D2R),
       st.t[1] + d * Math.sin(el * D2R),
