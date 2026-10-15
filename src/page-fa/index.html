@@ -322,6 +322,7 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 footer.wrap{padding-bottom:84px}
 .p3d .scene .step,.p3d .scene .step:first-child{padding-bottom:104px}
 }
+.q-extras{display:grid;gap:8px}.q-ex-t{font-size:14px;color:var(--mute)}.q-ex{display:flex;align-items:center;gap:8px;font-size:15px}.q-ex small{color:var(--mute);margin-inline-start:auto}.q-ex input{width:18px;height:18px}
 </style>
 
 <div class="fa" dir="rtl" lang="fa">
@@ -693,6 +694,9 @@ footer.wrap{padding-bottom:84px}
         <label for="q-qty">تعداد دستگاه<input id="q-qty" type="number" min="1" max="20" value="1" inputmode="numeric"></label>
         <label for="q-probe">پراب<select id="q-probe"><option value="7">پراب ۷ میلی‌متر</option><option value="15" selected>پراب ۱۵ میلی‌متر</option><option value="both">هر دو پراب (۷ و ۱۵)</option></select></label>
         <label for="q-color">رنگ بدنه<select id="q-color"><option>سفید</option><option>سبز</option><option>آبی</option></select></label>
+        <div class="full q-extras" id="q-extras" hidden></div>
+        <label for="q-code" class="full" id="q-code-wrap" hidden>کد تخفیف (اختیاری)<input id="q-code" dir="ltr" autocomplete="off" spellcheck="false" placeholder="مثلاً 10ABCD"></label>
+        <input id="q-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="full qbtns"><button class="btn solid" type="submit">ساخت پیش‌فاکتور</button><a class="btn" id="q-wa" href="https://wa.me/989123830551" target="_blank" rel="noopener">سؤال دارم، واتس‌اپ</a></div>
         <p class="qmsg" id="qmsg" role="status"></p>
       </form>
@@ -751,35 +755,66 @@ footer.wrap{padding-bottom:84px}
       probe15: { name: 'پراب تیتانیومی ۱۵ میلی‌متر', price: 0 },
       extra:   { name: 'پراب دوم', price: 40000000 }   /* price of a second probe */
     },
+    extras: [],                          /* optional parts: [{ id, name, price }] */
     seller: { name: 'شرکت توسعه فناوری مافوق صوت', phone: '۰۹۱۲۳۸۳۰۵۵۱', web: 'ultrasonic.co.ir' }
   };
+  /* WordPress plugin: prices, parts, discount codes, lead saving and e-mail are handled on the server */
+  var WP = window.UHP_WP || null;
+  if (WP && WP.pf) { for (var k in WP.pf) PF[k] = WP.pf[k]; }
   var faNum = function (n) { return new Intl.NumberFormat('fa-IR', { maximumFractionDigits: 0 }).format(n); };
   var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var pfNumber = '';
-  function buildProforma() {
-    var f = function (id) { return document.getElementById(id).value.trim(); };
-    var qty = Math.max(1, Math.min(20, parseInt(f('q-qty'), 10) || 1)), probe = f('q-probe'), color = f('q-color');
-    var main = probe === '7' ? PF.items.probe7 : PF.items.probe15;
-    var rows = [{ name: PF.items.base.name + '، همراه ' + main.name + '، رنگ ' + color, q: qty, p: PF.items.base.price + main.price }];
-    if (probe === 'both') rows.push({ name: PF.items.probe7.name + ' (پراب دوم)', q: qty, p: PF.items.extra.price });
-    var sub = rows.reduce(function (t, r) { return t + r.q * r.p; }, 0), vat = Math.round(sub * PF.vat), total = sub + vat;
-    var now = new Date(), until = new Date(now.getTime() + PF.validDays * 864e5);
-    var jd = function (d) { return new Intl.DateTimeFormat('fa-IR-u-ca-persian', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(d); };
-    pfNumber = 'UHP-' + now.toISOString().slice(2, 10).replace(/-/g, '') + '-' + String(Math.floor(Math.random() * 9000) + 1000);
-    var tr = rows.map(function (r, i) { return '<tr><td>' + faNum(i + 1) + '</td><td>' + esc(r.name) + '</td><td>' + faNum(r.q) + '</td><td class="n">' + (r.p ? faNum(r.p) : 'شامل') + '</td><td class="n">' + (r.p ? faNum(r.q * r.p) : '—') + '</td></tr>'; }).join('');
+  var fv = function (id) { return document.getElementById(id).value.trim(); };
+  if (WP) {
+    document.getElementById('q-code-wrap').hidden = false;
+    if (PF.extras && PF.extras.length) {
+      var ex = document.getElementById('q-extras'); ex.hidden = false;
+      ex.innerHTML = '<span class="q-ex-t">قطعات و اقلام اضافه (اختیاری)</span>' + PF.extras.map(function (x) {
+        return '<label class="q-ex"><input type="checkbox" value="' + esc(x.id) + '"> ' + esc(x.name) + ' <small>' + faNum(x.price) + ' ' + PF.currency + '</small></label>'; }).join('');
+    }
+  }
+  /* WordPress: rewrite price phrases in the FAQ to the prices set in the admin */
+  if (WP && WP.replace && WP.replace.length) {
+    var swap = function (n) {
+      if (n.nodeType === 3) { var t = n.nodeValue, o = t; WP.replace.forEach(function (p) { t = t.split(p[0]).join(p[1]); }); if (t !== o) n.nodeValue = t; }
+      else for (var c = n.firstChild; c; c = c.nextSibling) swap(c);
+    };
+    ['faq', 'quote'].forEach(function (id) { var el = document.getElementById(id); if (el) swap(el); });
+  }
+  function formData() {
+    return { name: fv('q-name'), mobile: fv('q-mobile'), org: fv('q-org'), city: fv('q-city'),
+      qty: Math.max(1, Math.min(20, parseInt(fv('q-qty'), 10) || 1)), probe: fv('q-probe'), color: fv('q-color'),
+      code: WP ? fv('q-code') : '', hp: fv('q-hp'),
+      extras: [].map.call(document.getElementById('q-extras').querySelectorAll('input:checked'), function (c) { return c.value; }) };
+  }
+  /* local price calculation (GoSite version) */
+  function calcLocal(d) {
+    var main = d.probe === '7' ? PF.items.probe7 : PF.items.probe15;
+    var rows = [{ name: PF.items.base.name + '، همراه ' + main.name + '، رنگ ' + d.color, q: d.qty, p: PF.items.base.price + main.price }];
+    if (d.probe === 'both') rows.push({ name: PF.items.probe7.name + ' (پراب دوم)', q: d.qty, p: PF.items.extra.price });
+    var sub = rows.reduce(function (t, r) { return t + r.q * r.p; }, 0), vat = Math.round(sub * PF.vat);
+    var now = new Date();
+    return { number: 'UHP-' + now.toISOString().slice(2, 10).replace(/-/g, '') + '-' + String(Math.floor(Math.random() * 9000) + 1000),
+      rows: rows, sub: sub, discPct: 0, disc: 0, vat: vat, vatPct: PF.vat * 100, total: sub + vat, validDays: PF.validDays };
+  }
+  function renderProforma(r, d) {
+    pfNumber = r.number;
+    var now = new Date(), until = new Date(now.getTime() + r.validDays * 864e5);
+    var jd = function (x) { return new Intl.DateTimeFormat('fa-IR-u-ca-persian', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(x); };
+    var tr = r.rows.map(function (x, i) { return '<tr><td>' + faNum(i + 1) + '</td><td>' + esc(x.name) + '</td><td>' + faNum(x.q) + '</td><td class="n">' + (x.p ? faNum(x.p) : 'شامل') + '</td><td class="n">' + (x.p ? faNum(x.q * x.p) : '—') + '</td></tr>'; }).join('');
+    var disc = r.disc ? '<tr class="tot"><td colspan="4">تخفیف (' + faNum(r.discPct) + '٪، کد <span dir="ltr">' + esc(r.code || '') + '</span>)</td><td class="n">−' + faNum(r.disc) + '</td></tr>' +
+      '<tr class="tot"><td colspan="4">جمع پس از تخفیف</td><td class="n">' + faNum(r.sub - r.disc) + '</td></tr>' : '';
     document.getElementById('pfSheet').innerHTML =
       (PF.sample ? '<div class="wm">نمونه · قیمت‌ها آزمایشی است</div>' : '') +
-      '<div class="pf-head"><div><h1>پیش‌فاکتور</h1><div>' + esc(PF.seller.name) + '</div></div><img src="' + BASE + 'logo.png" alt=""><div class="meta">شماره: <span dir="ltr">' + pfNumber + '</span><br>تاریخ: ' + jd(now) + '<br>اعتبار تا: ' + jd(until) + '</div></div>' +
-      '<div class="parties"><div><b>فروشنده</b><br>' + esc(PF.seller.name) + '<br>تلفن: ' + PF.seller.phone + '<br>' + PF.seller.web + '</div>' +
-      '<div><b>خریدار</b><br>' + esc(f('q-name')) + (f('q-org') ? '<br>' + esc(f('q-org')) : '') + '<br>موبایل: <span dir="ltr">' + esc(f('q-mobile')) + '</span>' + (f('q-city') ? '<br>شهر: ' + esc(f('q-city')) : '') + '</div></div>' +
+      '<div class="pf-head"><div><h1>پیش‌فاکتور</h1><div>' + esc(PF.seller.name) + '</div></div><img src="' + BASE + 'logo.png" alt=""><div class="meta">شماره: <span dir="ltr">' + esc(r.number) + '</span><br>تاریخ: ' + jd(now) + '<br>اعتبار تا: ' + jd(until) + '</div></div>' +
+      '<div class="parties"><div><b>فروشنده</b><br>' + esc(PF.seller.name) + '<br>تلفن: ' + esc(PF.seller.phone) + '<br>' + esc(PF.seller.web) + '</div>' +
+      '<div><b>خریدار</b><br>' + esc(d.name) + (d.org ? '<br>' + esc(d.org) : '') + '<br>موبایل: <span dir="ltr">' + esc(d.mobile) + '</span>' + (d.city ? '<br>شهر: ' + esc(d.city) : '') + '</div></div>' +
       '<table><thead><tr><th>ردیف</th><th>شرح کالا</th><th>تعداد</th><th>قیمت واحد (' + PF.currency + ')</th><th>مبلغ (' + PF.currency + ')</th></tr></thead><tbody>' + tr +
-      '<tr class="tot"><td colspan="4">جمع</td><td class="n">' + faNum(sub) + '</td></tr>' +
-      '<tr class="tot"><td colspan="4">مالیات بر ارزش افزوده (' + faNum(PF.vat * 100) + '٪)</td><td class="n">' + faNum(vat) + '</td></tr>' +
-      '<tr class="tot grand"><td colspan="4">مبلغ قابل پرداخت</td><td class="n">' + faNum(total) + '</td></tr></tbody></table>' +
-      '<ol class="terms"><li>این پیش‌فاکتور تا ' + faNum(PF.validDays) + ' روز از تاریخ صدور معتبر است و پس از آن قیمت‌ها ممکن است تغییر کند.</li><li>شرایط پرداخت، زمان تحویل و حمل پس از تماس کارشناس فروش قطعی می‌شود.</li><li>این سند به‌صورت خودکار از وب‌سایت صادر شده و پس از تأیید فروشنده و پرداخت، سفارش قطعی است.</li></ol>' +
+      '<tr class="tot"><td colspan="4">جمع</td><td class="n">' + faNum(r.sub) + '</td></tr>' + disc +
+      '<tr class="tot"><td colspan="4">مالیات بر ارزش افزوده (' + faNum(r.vatPct) + '٪)</td><td class="n">' + faNum(r.vat) + '</td></tr>' +
+      '<tr class="tot grand"><td colspan="4">مبلغ قابل پرداخت</td><td class="n">' + faNum(r.total) + '</td></tr></tbody></table>' +
+      '<ol class="terms"><li>این پیش‌فاکتور تا ' + faNum(r.validDays) + ' روز از تاریخ صدور معتبر است و پس از آن قیمت‌ها ممکن است تغییر کند.</li><li>شرایط پرداخت، زمان تحویل و حمل پس از تماس کارشناس فروش قطعی می‌شود.</li><li>این سند به‌صورت خودکار از وب‌سایت صادر شده و پس از تأیید فروشنده و پرداخت، سفارش قطعی است.</li></ol>' +
       '<div class="sign"><div class="stamp">مهر و امضای فروشنده</div><div class="stamp">امضای خریدار</div></div>';
-    saveLead({ time: now.toISOString(), number: pfNumber, name: f('q-name'), mobile: f('q-mobile'), org: f('q-org'), city: f('q-city'),
-      qty: qty, probe: probe, color: color, subtotal: sub, vat: vat, total: total, page: location.href });
   }
   /* fire-and-forget: a failed save never blocks the proforma or the PDF */
   function saveLead(d) {
@@ -787,11 +822,26 @@ footer.wrap{padding-bottom:84px}
     try { fetch(PF.saveUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(d) }).catch(function () {}); } catch (err) {}
   }
   var pfModal = document.getElementById('pfModal');
+  var qmsg = function (t) { document.getElementById('qmsg').textContent = t; };
   document.getElementById('qform').addEventListener('submit', function (e) {
     e.preventDefault();
-    var mob = document.getElementById('q-mobile').value.replace(/[^\d۰-۹]/g, '');
-    if (mob.length < 10) { document.getElementById('qmsg').textContent = 'لطفاً شمارهٔ موبایل را کامل وارد کنید.'; return; }
-    buildProforma(); pfModal.hidden = false; document.getElementById('qmsg').textContent = '';
+    var d = formData();
+    if (d.mobile.replace(/[^\d۰-۹]/g, '').length < 10) { qmsg('لطفاً شمارهٔ موبایل را کامل وارد کنید.'); return; }
+    if (!WP) {
+      var r = calcLocal(d); renderProforma(r, d); pfModal.hidden = false; qmsg('');
+      saveLead({ time: new Date().toISOString(), number: r.number, name: d.name, mobile: d.mobile, org: d.org, city: d.city,
+        qty: d.qty, probe: d.probe, color: d.color, subtotal: r.sub, vat: r.vat, total: r.total, page: location.href });
+      return;
+    }
+    var btn = e.target.querySelector('button[type=submit]'); btn.disabled = true; qmsg('در حال ساخت پیش‌فاکتور…');
+    var fd = new FormData(); fd.append('action', 'uhp400_proforma');
+    Object.keys(d).forEach(function (k) { fd.append(k, k === 'extras' ? d[k].join(',') : d[k]); });
+    fd.append('page', location.href);
+    fetch(WP.ajax, { method: 'POST', body: fd, credentials: 'same-origin' }).then(function (res) { return res.json(); }).then(function (j) {
+      btn.disabled = false;
+      if (!j || !j.success) { qmsg((j && j.data && j.data.message) || 'ساخت پیش‌فاکتور ممکن نشد. لطفاً دوباره تلاش کنید یا تماس بگیرید.'); return; }
+      renderProforma(j.data, d); pfModal.hidden = false; qmsg('');
+    }).catch(function () { btn.disabled = false; qmsg('ارتباط با سایت برقرار نشد. لطفاً دوباره تلاش کنید یا تماس بگیرید.'); });
   });
   document.getElementById('pfClose').addEventListener('click', function () { pfModal.hidden = true; });
   function loadLib(src, ok) { var sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = function () { document.getElementById('pfDownload').textContent = 'دانلود ممکن نشد'; }; document.head.appendChild(sc); }
@@ -804,7 +854,7 @@ footer.wrap{padding-bottom:84px}
         pdf.save('proforma-' + pfNumber + '.pdf'); btn.textContent = 'دانلود PDF';
       }).catch(function () { btn.textContent = 'دانلود ممکن نشد'; });
     };
-    var LIB = window.__UHP_LIB || 'https://cdnjs.cloudflare.com/ajax/libs/';
+    var LIB = window.__UHP_LIB || 'https://cdnjs.cloudflare.com/ajax/libs/';  /* plugin sets __UHP_LIB to its vendor folder */
     var needJs = function () { if (window.jspdf) go(); else loadLib(LIB + 'jspdf/2.5.1/jspdf.umd.min.js', go); };
     if (window.html2canvas) needJs(); else loadLib(LIB + 'html2canvas/1.4.1/html2canvas.min.js', needJs);
   });
@@ -819,6 +869,7 @@ footer.wrap{padding-bottom:84px}
 
   /* ---------- where files live (the GoSite build rewrites this line) ---------- */
   var BASE = '', VBASE = '', VMODEL = 'device.glb', SHELL = document.body;
+  var TEX = window.__UHP_THREE_EX || 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/';  /* plugin: its own copy of three.js examples */
 
   /* ---------- full interactive viewer, loaded when the visitor gets near it ---------- */
   var slot = document.getElementById('viewerSlot'), viewerStarted = false;
@@ -830,7 +881,7 @@ footer.wrap{padding-bottom:84px}
       slot.innerHTML = ''; slot.appendChild(el); window.UP400Viewer.mount(el);
     };
     var withViewer = function () { if (window.UP400Viewer && window.UP400Viewer.mount) go(); else loadScript(VBASE + 'up400-viewer.js', go); };
-    if (THREE.OrbitControls) withViewer(); else loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js', withViewer);
+    if (THREE.OrbitControls) withViewer(); else loadScript(TEX + 'controls/OrbitControls.js', withViewer);
   }
   /* warm the cache for the viewer in the background once the main model is in, so it opens fast */
   var prefetched = false;
@@ -838,7 +889,7 @@ footer.wrap{padding-bottom:84px}
     if (prefetched || viewerStarted || !window.THREE) return; prefetched = true;
     var nop = function () {};
     var add = function (src) { var sc = document.createElement('script'); sc.src = src; document.head.appendChild(sc); };
-    if (!THREE.OrbitControls) add('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js');
+    if (!THREE.OrbitControls) add(TEX + 'controls/OrbitControls.js');
     if (!window.UP400Viewer) add(VBASE + 'up400-viewer.js');
     if (window.fetch) fetch(VBASE + VMODEL).catch(nop);
   }
@@ -982,8 +1033,8 @@ footer.wrap{padding-bottom:84px}
   }
 
   /* glTF loader with Draco support (the decoder loads itself on first use) */
-  var DRACO_JS = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js';
-  var DRACO_LIB = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/';
+  var DRACO_JS = TEX + 'loaders/DRACOLoader.js';
+  var DRACO_LIB = TEX + 'libs/draco/';
   var dracoWait = null;
   function uhpLoader() {
     return { load: function (url, onLoad, onProgress, onError) {

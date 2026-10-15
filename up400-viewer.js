@@ -636,8 +636,9 @@ svg{width:18px;height:18px;flex:none}
       var mats = { body: [], head: [] }, baseColor = new Map();
 
       /* glTF loader with Draco support (the decoder loads itself on first use) */
-      var DRACO_JS = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js';
-      var DRACO_LIB = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/';
+      var TEX = window.__UHP_THREE_EX || 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/';
+      var DRACO_JS = TEX + 'loaders/DRACOLoader.js';
+      var DRACO_LIB = TEX + 'libs/draco/';
       var dracoWait = null;
       function uhpLoader() {
         return { load: function (url, onLoad, onProgress, onError) {
