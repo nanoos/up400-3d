@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Topsonics UHP-400 – صفحهٔ محصول سه‌بعدی و پیش‌فاکتور
  * Description: صفحهٔ فارسی هموژنایزر اولتراسونیک UHP-400 با مدل سه‌بعدی، پیش‌فاکتور فوری PDF، کد تخفیف یک‌بارمصرف، ذخیرهٔ درخواست‌ها و ارسال ایمیل. همهٔ فایل‌ها داخل افزونه است و به هیچ سرور خارجی وابسته نیست. برای نمایش، کد کوتاه [uhp400] را در یک برگه بگذارید.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: شرکت توسعه فناوری مافوق صوت
  * Requires at least: 5.8
  * Requires PHP: 7.0
@@ -11,7 +11,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-define('UHP400_VER', '1.0.0');
+define('UHP400_VER', '1.0.1');
 define('UHP400_DIR', plugin_dir_path(__FILE__));
 define('UHP400_URL', plugin_dir_url(__FILE__));
 
@@ -190,7 +190,13 @@ function uhp400_shortcode() {
         array(esc_url(get_permalink()), esc_url($a), (string) ((int) $o['base_price'] * 10)),
         $html);
     foreach (uhp400_replacements($o) as $p) $html = str_replace($p[0], $p[1], $html);
-    return $html;
+    return '<style>body{overflow-x:hidden}.uhp400-bleed{position:relative;max-width:none!important;box-sizing:border-box}</style>'
+         . '<div class="uhp400-bleed" id="uhp400-bleed">' . $html . '</div>'
+         . '<script>(function(){var e=document.getElementById("uhp400-bleed");if(!e)return;'
+         . 'function f(){var w=document.documentElement.clientWidth;e.style.width=w+"px";e.style.left="0px";'
+         . 'var r=e.getBoundingClientRect();e.style.left=(-r.left)+"px";}'
+         . 'f();window.addEventListener("resize",f);window.addEventListener("load",f);'
+         . 'if(window.ResizeObserver&&e.parentNode)new ResizeObserver(f).observe(e.parentNode);})();</script>';
 }
 
 /* ------------------------------------------------------------------ proforma request */
