@@ -5,7 +5,7 @@
  * Version: 1.0.0
  * Author: شرکت توسعه فناوری مافوق صوت
  * Requires at least: 5.8
- * Requires PHP: 7.4
+ * Requires PHP: 7.0
  * Text Domain: topsonics-uhp400
  */
 
