@@ -241,6 +241,15 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 .p3d .tag.probe em b{font-size:24px}
 .p3d .loading{left:16px;right:auto;top:72px;bottom:auto}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* FAQ */
+.faq .qa{margin-top:22px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding-block:16px;padding-inline:0 36px;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary h3{font-size:17px;margin:0;font-weight:600}
+.faq summary::after{content:"+";position:absolute;inset-inline-end:4px;top:12px;font-size:24px;line-height:1;color:var(--blue);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0 0 18px;color:var(--mute);max-width:75ch;font-size:15.5px;line-height:1.7}
 </style>
 
 <header class="nav" id="nav">
@@ -560,6 +569,10 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
         <p>Open the door, raise the table, swap the probe and press start. On a phone, use the buttons under the model.</p>
       </div>
       <div class="viewer-slot" id="viewerSlot"><p class="viewer-wait" id="viewerWait">The 3D viewer loads when you reach it.</p></div>
+    </div></div>
+    <div class="sec wrap faq" id="faq"><div class="inner">
+      <div class="sec-head"><p class="eyebrow">Questions</p><h2>Frequently asked questions</h2><p>Short answers to what labs ask us most about probe sonication and the UHP-400.</p></div>
+      <div class="qa"><details><summary><h3>Which probe should I use for my sample volume?</h3></summary><p>Use the 15 mm probe for batches from 100 mL up to 3.5 L, and the 7 mm probe for smaller volumes such as vials, tubes and small beakers. A thinner tip concentrates the power on a smaller area, so it gives a small sample a higher intensity; the wider tip spreads the energy through a larger volume. Both probes are Ti-6Al-4V titanium and fit the same acoustic stack.</p></details><details><summary><h3>How do I keep the sample from overheating during sonication?</h3></summary><p>Combine pulse mode, cooling and a temperature limit. On the UHP-400 the pulse duty cycle is adjustable from 5 to 95 % of a 15 s period, so the sample cools between bursts. Put heat-sensitive samples such as proteins or cells in an ice bath. The built-in sensor reads 0–80 °C and stops the run automatically when your limit is reached.</p></details><details><summary><h3>How deep should the probe tip go into the liquid?</h3></summary><p>Immerse the tip about 10–15 mm below the surface and keep it centred, at least one probe diameter away from the vessel wall and bottom. A tip that is too shallow pulls in air and causes foaming; a tip that touches the wall wastes energy and can crack glass. The adjustable sample table lets you repeat the same position on every run.</p></details><details><summary><h3>Ultrasonic homogenizer or rotor-stator: which is better?</h3></summary><p>For small and medium liquid batches an ultrasonic homogenizer usually reaches smaller particle and droplet sizes and breaks cells more completely. The probe is one solid piece with no seals or blades, so it is quick to clean, and you can switch probes for different volumes. Its drawback is heat, which the UHP-400 controls with pulse mode and the automatic temperature limit. Rotor-stator mixers suit larger volumes and very viscous material.</p></details><details><summary><h3>How do I look after the titanium probe, and how long does it last?</h3></summary><p>Rinse the tip with deionized water after each run, wipe it dry and avoid abrasive cleaners. Check the end face regularly: cavitation slowly erodes it into a rough, pitted surface. Replace a worn or cracked tip, because it loses efficiency and puts extra load on the transducer. Probe life depends on power, run time and the sample; abrasive particles and solvents wear it faster.</p></details><details><summary><h3>What is the UHP-400 used for?</h3></summary><p>The main uses are cell lysis (bacteria, yeast and tissue) for protein and DNA work, emulsification, dispersing and de-agglomerating nanoparticles, and extracting compounds from plant material. It is also used to shear chromatin for ChIP.</p></details><details><summary><h3>Is the UHP-400 loud? Do I need a separate sound box?</h3></summary><p>No separate box is needed. The UHP-400 has a built-in sound cabinet with a door and window, so the probe runs enclosed and you can watch the sample through the window.</p></details></div>
     </div></div>
     <div class="wrap research" style="padding-bottom:clamp(56px,7vw,96px)"><div class="inner">
       <div class="sec-head"><p class="eyebrow">References</p><h2>Papers cited on this page</h2>

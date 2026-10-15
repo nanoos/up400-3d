@@ -301,6 +301,15 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 .pf-sheet .stamp{border-top:1px solid #999;padding-top:6px;width:200px;text-align:center}
 .pf-sheet .wm{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;font:700 64px/1 var(--body);color:rgba(200,30,30,.10);transform:rotate(-24deg)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* FAQ */
+.faq .qa{margin-top:22px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding-block:16px;padding-inline:0 36px;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary h3{font-size:17px;margin:0;font-weight:600}
+.faq summary::after{content:"+";position:absolute;inset-inline-end:4px;top:12px;font-size:24px;line-height:1;color:var(--blue);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0 0 18px;color:var(--mute);max-width:75ch;font-size:15.5px;line-height:1.7}
 </style>
 
 <div class="fa" dir="rtl" lang="fa">
@@ -628,7 +637,6 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
           <p>پراب و رنگ را انتخاب کنید و همان لحظه پیش‌فاکتور رسمی را به‌صورت PDF بگیرید.</p>
           <div style="margin-top:18px"><a class="btn solid" href="#quote">دریافت پیش‌فاکتور</a></div>
         </div>
-        </div>
       </div>
     </div>
   </section>
@@ -641,6 +649,10 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
         <p>در را باز کنید، میز را بالا ببرید، پراب را عوض کنید و دکمهٔ شروع را بزنید. روی گوشی از دکمه‌های زیر مدل استفاده کنید.</p>
       </div>
       <div class="viewer-slot" id="viewerSlot" dir="ltr"><p class="viewer-wait" id="viewerWait">نمایشگر سه‌بعدی وقتی به این بخش برسید بارگذاری می‌شود.</p></div>
+    </div></div>
+    <div class="sec wrap faq" id="faq"><div class="inner">
+      <div class="sec-head"><p class="eyebrow">پرسش‌ها</p><h2>پرسش‌های پرتکرار</h2><p>پاسخ کوتاه به پرسش‌هایی که آزمایشگاه‌ها دربارهٔ سونیکیت با پراب و UHP-400 بیشتر می‌پرسند.</p></div>
+      <div class="qa"><details><summary><h3>برای هر حجم نمونه از کدام پراب استفاده کنم؟</h3></summary><p>برای حجم ۱۰۰ میلی‌لیتر تا ۳٫۵ لیتر از پراب ۱۵ میلی‌متری و برای حجم‌های کمتر، مثل ویال، لوله و بشر کوچک، از پراب ۷ میلی‌متری استفاده کنید. نوک باریک‌تر توان را روی سطح کوچک‌تری متمرکز می‌کند و به نمونهٔ کم شدت بیشتری می‌دهد؛ نوک پهن‌تر انرژی را در حجم بزرگ‌تری پخش می‌کند. هر دو پراب از تیتانیوم Ti-6Al-4V هستند و روی یک استک آکوستیک بسته می‌شوند.</p></details><details><summary><h3>چطور از داغ شدن نمونه هنگام سونیکیت جلوگیری کنم؟</h3></summary><p>حالت پالس، خنک‌کردن و حد دما را با هم به کار ببرید. در UHP-400 دیوتی سایکل پالس از ۵ تا ۹۵ درصدِ یک دورهٔ ۱۵ ثانیه‌ای قابل تنظیم است تا نمونه بین پالس‌ها خنک شود. نمونه‌های حساس به گرما مثل پروتئین و سلول را در حمام یخ بگذارید. حسگر داخلی دستگاه ۰ تا ۸۰ درجه را می‌خواند و با رسیدن به حدی که تعیین کرده‌اید، کار را خودکار متوقف می‌کند.</p></details><details><summary><h3>نوک پراب چقدر باید داخل مایع برود؟</h3></summary><p>نوک پراب را حدود ۱۰ تا ۱۵ میلی‌متر زیر سطح مایع و در مرکز ظرف قرار دهید، دست‌کم به اندازهٔ قطر پراب دور از دیواره و کف. اگر نوک خیلی بالا باشد هوا وارد می‌شود و کف ایجاد می‌کند؛ اگر به دیواره بخورد انرژی هدر می‌رود و ممکن است ظرف شیشه‌ای ترک بردارد. میز نمونهٔ قابل تنظیم کمک می‌کند در هر بار کار همان ارتفاع را تکرار کنید.</p></details><details><summary><h3>هموژنایزر اولتراسونیک بهتر است یا روتور-استاتور؟</h3></summary><p>برای حجم‌های کم و متوسط مایع، هموژنایزر اولتراسونیک معمولاً به اندازهٔ ذره و قطرهٔ ریزتری می‌رسد و سلول‌ها را کامل‌تر می‌شکند. پراب یک قطعهٔ یکپارچه و بدون آب‌بند و تیغه است، پس تمیز کردنش سریع است و برای حجم‌های مختلف می‌شود پراب را عوض کرد. عیب آن تولید گرماست که UHP-400 با حالت پالس و حد دمای خودکار کنترلش می‌کند. روتور-استاتور برای حجم‌های بزرگ‌تر و مواد خیلی غلیظ مناسب‌تر است.</p></details><details><summary><h3>از پراب تیتانیومی چطور نگهداری کنم و عمرش چقدر است؟</h3></summary><p>بعد از هر بار کار نوک پراب را با آب دیونیزه بشویید، خشک کنید و از پاک‌کننده‌های ساینده استفاده نکنید. سطح نوک را مرتب بررسی کنید؛ کاویتاسیون به‌تدریج آن را زبر و حفره‌دار می‌کند. نوک فرسوده یا ترک‌خورده را عوض کنید، چون بازده را کم می‌کند و به ترنسدیوسر فشار می‌آورد. عمر پراب به توان، زمان کار و نوع نمونه بستگی دارد؛ ذرات ساینده و حلال‌ها آن را زودتر فرسوده می‌کنند.</p></details><details><summary><h3>UHP-400 برای چه کارهایی استفاده می‌شود؟</h3></summary><p>کاربردهای اصلی: لیز سلولی (باکتری، مخمر و بافت) برای کار با پروتئین و DNA، ساخت امولسیون، پراکنده‌سازی و شکستن کلوخه‌های نانوذرات، و استخراج ترکیبات از مواد گیاهی. برای خرد کردن کروماتین در آزمایش ChIP هم به کار می‌رود.</p></details><details><summary><h3>آیا دستگاه پرسروصداست؟ جعبهٔ صدا جداگانه لازم دارد؟</h3></summary><p>خیر، جعبهٔ جداگانه لازم نیست. UHP-400 محفظهٔ صوتی داخلی با در و پنجره دارد؛ پراب داخل محفظه کار می‌کند و نمونه را از پنجره می‌بینید.</p></details><details><summary><h3>قیمت هموژنایزر UHP-400 چقدر است؟</h3></summary><p>قیمت UHP-400 همراه یک پراب (۷ یا ۱۵ میلی‌متر)، محفظهٔ صوتی، میز نمونه و حسگر دما ۳۵۰ میلیون تومان است و ۱۰ درصد مالیات بر ارزش افزوده جداگانه به آن اضافه می‌شود. پراب دوم ۴۰ میلیون تومان است. با فرم همین صفحه پیش‌فاکتور فوری بگیرید؛ پیش‌فاکتور ۳ روز اعتبار دارد.</p></details></div>
     </div></div>
     <div class="wrap research" style="padding-bottom:clamp(56px,7vw,96px)"><div class="inner">
       <div class="sec-head"><p class="eyebrow">منابع</p><h2>مقاله‌های استنادشده در این صفحه</h2>
