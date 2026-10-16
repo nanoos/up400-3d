@@ -1,0 +1,26 @@
+<script>
+  const script = document.createElement('script');
+  script.textContent = `(function () {
+    setTimeout(function () {
+      if (window.UHPPageV2) { window.UHPPageV2.mountAll(); return; }
+      if (window.__uhpLoadingV2) return;
+      window.__uhpLoadingV2 = true;
+      var cdn = 'https://cdn.jsdelivr.net/';
+      var files = [];
+      if (!window.THREE) files.push('npm/three@0.128.0/build/three.min.js');
+      if (!window.THREE || !THREE.GLTFLoader) files.push('npm/three@0.128.0/examples/js/loaders/GLTFLoader.js');
+      if (!window.THREE || !THREE.RoomEnvironment) files.push('npm/three@0.128.0/examples/js/environments/RoomEnvironment.js');
+      files.push(['gh/nanoos/up400-3d@SHA_V2/page/uhp-page-v2.js']);
+      (function next(i, j) {
+        if (i >= files.length) return;
+        var list = [].concat(files[i]);
+        var s = document.createElement('script');
+        s.src = cdn + list[j || 0];
+        s.onload = function () { next(i + 1, 0); };
+        s.onerror = function () { s.remove(); if ((j || 0) + 1 < list.length) next(i, (j || 0) + 1); };
+        document.head.appendChild(s);
+      })(0, 0);
+    }, 0);
+  })();`;
+  document.body.appendChild(script);
+</script>

@@ -43,15 +43,15 @@ CSS = r"""
 /* v2: in the box */
 .inbox{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:40px}
 .inbox figure{margin:0;background:var(--mist);border-radius:3px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
-.inbox img{width:100%;height:280px;object-fit:cover;display:block}
+.inbox img{width:100%;height:320px;object-fit:contain;background:#ece9e0;display:block}
 .inbox figcaption{padding:14px 16px;font-size:15px;color:var(--text)}
 .inbox figcaption b{display:block;color:var(--ink);margin-bottom:4px}
-.inbox .wide{grid-column:span 2}.inbox .wide img{object-fit:contain;background:#efece3}
-.inbox .todo-box{min-height:280px}
+.inbox .wide{grid-column:span 2}
+.inbox .todo-box{min-height:320px}
 .boxlist{margin:28px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px;border-top:1px solid var(--line)}
 .boxlist li{padding:10px 0;border-bottom:1px solid var(--line);font-size:15.5px}
 .boxlist li b{color:var(--blue);margin-right:10px}
-@media (max-width:760px){.inbox{grid-template-columns:minmax(0,1fr)}.inbox .wide{grid-column:auto}.inbox img{height:240px}.boxlist{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){.inbox{grid-template-columns:minmax(0,1fr)}.inbox .wide{grid-column:auto}.inbox img{height:280px}.boxlist{grid-template-columns:minmax(0,1fr)}}
 /* v2: evidence, safety, applications */
 .egrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:40px}
 .ecard{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:20px;display:grid;gap:12px;align-content:start}
