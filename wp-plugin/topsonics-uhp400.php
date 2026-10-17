@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Topsonics UHP-400 – صفحهٔ محصول سه‌بعدی و پیش‌فاکتور
  * Description: صفحهٔ فارسی هموژنایزر اولتراسونیک UHP-400 با مدل سه‌بعدی، پیش‌فاکتور فوری PDF، کد تخفیف یک‌بارمصرف، ذخیرهٔ درخواست‌ها و ارسال ایمیل. همهٔ فایل‌ها داخل افزونه است و به هیچ سرور خارجی وابسته نیست. برای نمایش، کد کوتاه [uhp400] را در یک برگه بگذارید.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: شرکت توسعه فناوری مافوق صوت
  * Requires at least: 5.8
  * Requires PHP: 7.0
@@ -11,7 +11,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-define('UHP400_VER', '1.0.2');
+define('UHP400_VER', '1.0.3');
 define('UHP400_DIR', plugin_dir_path(__FILE__));
 define('UHP400_URL', plugin_dir_url(__FILE__));
 
@@ -32,6 +32,9 @@ function uhp400_defaults() {
         'seller_phone'  => '۰۹۱۲۳۸۳۰۵۵۱',
         'seller_web'    => 'ultrasonic.co.ir',
         'base_name'     => 'هموژنایزر اولتراسونیک UHP-400 با محفظهٔ صوتی، میز نمونه و حسگر دما',
+        'catalog_url'   => '',
+        'manual_url_fa' => '',
+        'manual_url_en' => '',
     );
 }
 
@@ -176,6 +179,11 @@ function uhp400_shortcode() {
             'extras'    => $extras,
             'seller'    => array('name' => $o['seller_name'], 'phone' => $o['seller_phone'], 'web' => $o['seller_web']),
         ),
+        'links'   => array(
+            'catalog'   => $o['catalog_url'],
+            'manualFa'  => $o['manual_url_fa'],
+            'manualEn'  => $o['manual_url_en'],
+        ),
     );
     $inline = 'window.UHP_WP=' . wp_json_encode($cfg) . ';'
             . 'window.__UHP_LIB=' . wp_json_encode($v . 'libs/') . ';'
@@ -305,6 +313,7 @@ function uhp400_page_settings() {
             if (is_int($def)) $val = (int) preg_replace('/[^\d]/', '', uhp400_latin_digits($val));
             elseif ($k === 'extras') $val = sanitize_textarea_field($val);
             elseif ($k === 'email_to') $val = sanitize_email($val);
+            elseif (in_array($k, array('catalog_url', 'manual_url_fa', 'manual_url_en'), true)) $val = esc_url_raw($val);
             else $val = sanitize_text_field($val);
             $o[$k] = $val;
         }
@@ -332,6 +341,9 @@ function uhp400_page_settings() {
     $f('seller_name', 'نام فروشنده');
     $f('seller_phone', 'تلفن فروشنده');
     $f('seller_web', 'وب‌سایت فروشنده');
+    $f('catalog_url', 'لینک فایل کاتالوگ (PDF)', 'آدرس فایل کاتالوگ که در صفحهٔ اصلی روی دکمهٔ «کاتالوگ» می‌رود. فایل را در رسانه (Media) وردپرس بار بگذارید و لینکش را این‌جا بگذارید.');
+    $f('manual_url_fa', 'لینک منوال فارسی (PDF)');
+    $f('manual_url_en', 'لینک منوال انگلیسی (PDF)');
     echo '</table><p><button class="button button-primary" name="uhp400_save" value="1">ذخیره</button></p></form>';
     echo '<hr><form method="post">';
     wp_nonce_field('uhp400_test_mail');

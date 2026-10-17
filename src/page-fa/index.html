@@ -179,6 +179,9 @@ input:focus,select:focus{border-color:var(--blue);outline:none}
 .box ul{margin:16px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
 .box li{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)}
 .box li b{font:600 13px/1.7 var(--mono);color:var(--blue)}
+.manual-links{margin-top:14px;display:flex;flex-wrap:wrap;gap:16px}
+.manual-links a{font-size:14px;color:var(--blue);text-decoration:underline}
+.manual-links a:hover,.manual-links a:focus-visible{color:var(--navy)}
 @media (max-width:860px){.vcols,.calc-box{grid-template-columns:minmax(0,1fr)}.fields{grid-template-columns:minmax(0,1fr)}}
 
 /* viewer, research, quote */
@@ -277,12 +280,14 @@ footer{padding-block:24px 36px;display:flex;flex-wrap:wrap;gap:10px 32px;justify
 
 [hidden]{display:none!important}
 /* what you receive */
-.receive{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(28px,6vw,96px);align-items:center}
-.receive figure{margin:0}.receive img{width:100%;max-width:340px;border-radius:3px;margin:0 auto}
-.rlist{list-style:none;margin:24px 0 0;padding:0;border-top:1px solid var(--line)}
+.inbox-fa{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:36px}
+.inbox-fa figure{margin:0;background:var(--mist);border-radius:3px;overflow:hidden;display:grid;grid-template-rows:1fr auto}
+.inbox-fa img{width:100%;height:260px;object-fit:contain;background:#ece9e0;display:block}
+.inbox-fa figcaption{padding:12px 14px;font-size:14.5px;color:var(--ink);text-align:center}
+.rlist{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid var(--line)}
 .rlist li{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
 .rlist b{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:14px;flex:none}
-@media (max-width:640px){.receive{grid-template-columns:minmax(0,1fr)}.receive img{max-width:260px}}
+@media (max-width:640px){.inbox-fa{grid-template-columns:minmax(0,1fr)}.inbox-fa img{height:220px}}
 .qbtns{display:flex;flex-wrap:wrap;gap:10px}
 /* proforma */
 .pf-modal{position:fixed;inset:0;z-index:40;background:rgba(10,20,35,.55);display:grid;place-items:center;padding:16px}
@@ -353,8 +358,8 @@ footer.wrap{padding-bottom:84px}
     <div class="inner"><div class="hero-text">
       <p class="eyebrow">هموژنایزر اولتراسونیک</p>
       <h1 class="latin">UHP-400</h1>
-      <p class="lede">پراکنش، استخراج و تخریب سلولی در یک سیستم بسته.</p>
-      <div class="ctas"><a class="btn solid" href="#quote">استعلام قیمت</a><a class="btn" href="#film">دیدن دستگاه در حال کار</a></div>
+      <p class="lede">همگن‌سازی نانومواد، استخراج گیاهان دارویی و ... همه در یک دستگاه.</p>
+      <div class="ctas"><a class="btn solid" href="#quote">استعلام قیمت</a><a class="btn" href="#film">دیدن دستگاه در حال کار</a><a class="btn" id="catalogBtn" href="#" target="_blank" rel="noopener" hidden>کاتالوگ</a></div>
       <div class="stats">
         <div class="stat"><b><bdi>400</bdi><small>W</small></b><span>بیشینهٔ توان خروجی</span></div>
         <div class="stat"><b><bdi>24</bdi><small>kHz</small></b><span>فرکانس ثابت</span></div>
@@ -585,26 +590,24 @@ footer.wrap{padding-bottom:84px}
 
   <!-- WHAT YOU RECEIVE -->
   <section class="paper" id="receive">
-    <div class="sec wrap"><div class="inner receive">
-      <figure>
-        <img src="crate.webp" alt="جعبهٔ چوبی حمل UHP-400 با قاب فلزی، دستهٔ طنابی و لوگوی حکاکی‌شده" width="660" height="750" loading="lazy">
-        <figcaption class="cap">جعبهٔ حمل UHP-400</figcaption>
-      </figure>
-      <div>
-        <div class="sec-head">
-          <p class="eyebrow">آنچه دریافت می‌کنید</p>
-          <h2>در یک جعبهٔ چوبی محکم، آمادهٔ نصب</h2>
-          <p>دستگاه در جعبهٔ چوبی با لبه‌های فلزی و دستهٔ حمل ارسال می‌شود تا در راه سالم برسد.</p>
-        </div>
-        <ul class="rlist">
-          <li><b>۱</b><span>هد کنترل با صفحهٔ لمسی ۵ اینچ</span></li>
-          <li><b>۲</b><span>محفظهٔ صوتی با در، پنجره و نور LED</span></li>
-          <li><b>۳</b><span>میز نمونهٔ قابل تنظیم با حلقهٔ سیلیکونی</span></li>
-          <li><b>۴</b><span>استک آکوستیک با پراب تیتانیومی ۷ یا ۱۵ میلی‌متر</span></li>
-          <li><b>۵</b><span>حسگر دمای داخلی</span></li>
-        </ul>
-        <p class="cap" style="text-align:start;margin-top:14px">عکس تک‌تک اقلام به‌زودی اضافه می‌شود.</p>
+    <div class="sec wrap"><div class="inner">
+      <div class="sec-head">
+        <p class="eyebrow">آنچه دریافت می‌کنید</p>
+        <h2>در یک جعبهٔ چوبی محکم، آمادهٔ نصب</h2>
+        <p>دستگاه در جعبهٔ چوبی با لبه‌های فلزی و دستهٔ حمل ارسال می‌شود تا در راه سالم برسد.</p>
       </div>
+      <div class="inbox-fa">
+        <figure><img src="crate.webp" alt="جعبهٔ چوبی حمل UHP-400 با قاب فلزی، دستهٔ طنابی و لوگوی حکاکی‌شده" width="660" height="750" loading="lazy"><figcaption>جعبهٔ حمل UHP-400</figcaption></figure>
+        <figure><img src="box-head.webp" alt="هد کنترل UHP-400 با صفحهٔ لمسی، استک آکوستیک و پراب تیتانیومی" width="900" height="1125" loading="lazy"><figcaption>هد کنترل، استک آکوستیک و پراب</figcaption></figure>
+        <figure><img src="box-cables.webp" alt="کابل‌های UHP-400 و حسگر دمای استیل" width="1400" height="744" loading="lazy"><figcaption>کابل‌ها و حسگر دما</figcaption></figure>
+      </div>
+      <ul class="rlist">
+        <li><b>۱</b><span>هد کنترل با صفحهٔ لمسی ۵ اینچ</span></li>
+        <li><b>۲</b><span>محفظهٔ صوتی با در، پنجره و نور LED</span></li>
+        <li><b>۳</b><span>میز نمونهٔ قابل تنظیم با حلقهٔ سیلیکونی</span></li>
+        <li><b>۴</b><span>استک آکوستیک با پراب تیتانیومی ۷ یا ۱۵ میلی‌متر</span></li>
+        <li><b>۵</b><span>حسگر دمای داخلی</span></li>
+      </ul>
     </div></div>
   </section>
 
@@ -657,6 +660,10 @@ footer.wrap{padding-bottom:84px}
           <h3>پیش‌فاکتور فوری</h3>
           <p>پراب و رنگ را انتخاب کنید و همان لحظه پیش‌فاکتور رسمی را به‌صورت PDF بگیرید.</p>
           <div style="margin-top:18px"><a class="btn solid" href="#quote">دریافت پیش‌فاکتور</a></div>
+          <div class="manual-links" id="manualLinks" hidden>
+            <a id="manualFaLink" href="#" target="_blank" rel="noopener">دانلود منوال فارسی (PDF)</a>
+            <a id="manualEnLink" href="#" target="_blank" rel="noopener" class="latin">Manual (English, PDF)</a>
+          </div>
         </div>
       </div>
     </div>
@@ -772,6 +779,19 @@ footer.wrap{padding-bottom:84px}
   /* WordPress plugin: prices, parts, discount codes, lead saving and e-mail are handled on the server */
   var WP = window.UHP_WP || null;
   if (WP && WP.pf) { for (var k in WP.pf) PF[k] = WP.pf[k]; }
+  (function () {
+    var L = WP && WP.links;
+    var catalogBtn = document.getElementById('catalogBtn');
+    if (catalogBtn) { if (L && L.catalog) { catalogBtn.href = L.catalog; catalogBtn.hidden = false; } else catalogBtn.hidden = true; }
+    var manualWrap = document.getElementById('manualLinks');
+    if (manualWrap) {
+      var faLink = document.getElementById('manualFaLink'), enLink = document.getElementById('manualEnLink');
+      var any = false;
+      if (L && L.manualFa) { faLink.href = L.manualFa; any = true; } else if (faLink) faLink.hidden = true;
+      if (L && L.manualEn) { enLink.href = L.manualEn; any = true; } else if (enLink) enLink.hidden = true;
+      manualWrap.hidden = !any;
+    }
+  })();
   var faNum = function (n) { return new Intl.NumberFormat('fa-IR', { maximumFractionDigits: 0 }).format(n); };
   var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var pfNumber = '';
