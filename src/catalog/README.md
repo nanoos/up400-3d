@@ -40,3 +40,34 @@ Still true and unchanged by this decision:
 - `build_en_draft.py` (the English BANDELIN-style draft) was built before this resolution
   and still has the old, more cautious numbers in its green-flagged gaps — re-check it
   against this file before reusing.
+
+## Second rebuild — 17 Oct 2026: company identity switched to ultrasonic.co.ir (Iran)
+
+Amir asked for the *final/graphic* Persian catalog (`fa_catalog.html`) to be rebuilt from the
+real Persian site content (`src/page-fa/index.html` / `wp-plugin/assets/content-fa.html`)
+instead of the English/Lithuania GoSite copy used in the first draft. Changes:
+
+- **Manufacturer/company identity**: "توپ‌سونیکس، ویلنیوس، لیتوانی" (Lithuania/EU) replaced
+  throughout with "شرکت توسعه فناوری مافوق صوت" — ساخت ایران، فعال از سال ۱۳۸۲ (2003). This
+  is the real company identity used on ultrasonic.co.ir (WP plugin author field, JSON-LD
+  `manufacturer`); "Topsonics" stays as the product/brand name only (JSON-LD `brand`), so the
+  logo/wordmark on the cover is unchanged.
+- **Contact page**: real Iran contact (WhatsApp/Telegram + phone `+98 912 383 0551`,
+  `ultrasonic.co.ir`) replacing the fabricated Lithuania email/phone numbers from the first
+  draft, with clickable `wa.me`/`tel:` links matching the site fix below.
+- **New pages**: a "شواهد علمی" (research/evidence) page listing the 6 real peer-reviewed
+  citations from the site with DOIs, and a real FAQ page (both lifted from
+  `content-fa.html`) — replacing invented generic content from the BANDELIN-inspired draft.
+- **Applications page**: rewritten to the site's actual four use-cases (cell lysis/ChIP,
+  nanoparticle dispersion, plant-compound extraction, repeatable run settings).
+- **Graphic design pass**: added a feature-chip row (touch screen / run-logging / auto
+  temperature stop), a three-color body-swatch grid using the real render-white/green/blue
+  renders, and fixed a CSS grid bug in the new research list (meta/DOI text was wrapping into
+  the narrow number-badge column instead of the content column).
+- `assets/` now holds the actual images used (device photos, in-the-box photos, logo, the
+  3 color renders) rather than only being documented as "copy them in before rendering" —
+  the catalog folder is self-contained in git now.
+
+**Not done / still open:** `build_en_draft.py` (English draft) still uses the Lithuania/EU
+company framing and was not touched in this pass — if that file is reused, it needs the same
+Iran-identity rebase, or it will contradict `fa_catalog.html`.

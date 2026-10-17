@@ -86,9 +86,40 @@ ul.bullets li b{color:var(--navy)}
 
 .foot{position:absolute;bottom:12mm;right:16mm;left:16mm;display:flex;justify-content:space-between;font-size:9.5px;color:var(--mute);border-top:1px solid var(--line);padding-top:3mm}
 
+/* ---------- feature chips ---------- */
+.chip-row{display:flex;flex-wrap:wrap;gap:4mm;margin-top:5mm}
+.chip{display:flex;align-items:center;gap:3mm;background:#eef3f7;border-radius:5px;padding:3.5mm 5mm;font-size:11.5px;color:var(--navy);font-weight:600;flex:1;min-width:0}
+.chip svg{width:16px;height:16px;flex:none;color:var(--blue)}
+
+/* ---------- color swatches ---------- */
+.color-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:4mm}
+.color-card{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff}
+.color-card img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover;background:#f7f9fa}
+.color-card figcaption{display:flex;align-items:center;gap:2.5mm;padding:3mm 4mm;font-size:11.5px;color:var(--text);font-weight:600}
+.color-dot{width:9px;height:9px;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.12)}
+
+/* ---------- research / evidence ---------- */
+.ref-list{margin:0;padding:0;list-style:none;counter-reset:ref}
+.ref-item{counter-increment:ref;display:grid;grid-template-columns:8mm 1fr;gap:4mm;padding:4mm 0;border-bottom:1px solid var(--line)}
+.ref-item:first-child{border-top:1px solid var(--line)}
+.ref-item::before{content:counter(ref);display:flex;align-items:center;justify-content:center;width:7mm;height:7mm;border-radius:50%;background:var(--navy);color:#fff;font:700 11px/1 'Titillium Web';margin-top:.5mm}
+.ref-body{min-width:0}
+.ref-item h3{font-size:12.5px;margin-bottom:1.5mm;color:var(--ink);font-weight:700}
+.ref-item .meta{font-size:11px;color:var(--mute)}
+.ref-item .finding{font-size:11.5px;color:var(--text);margin-top:1.5mm}
+.ref-item .finding b{color:var(--navy)}
+.ref-item a{display:block;margin-top:2mm;color:var(--blue);text-decoration:none;font-size:11px;word-break:break-all}
+
+/* ---------- FAQ ---------- */
+.faq-item{padding:4.5mm 0;border-bottom:1px solid var(--line)}
+.faq-item:first-child{border-top:1px solid var(--line)}
+.faq-item h3{font-size:13px;color:var(--navy);margin-bottom:2mm;display:flex;gap:2.5mm}
+.faq-item h3 .q-mark{color:var(--teal);flex:none}
+.faq-item p{font-size:12px;color:var(--text);margin:0}
+
 /* ---------- contact page ---------- */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:6mm;margin-top:6mm}
-.contact-card{background:var(--navy);color:#fff;border-radius:8px;padding:9mm;text-align:center}
+.contact-card{display:block;background:var(--navy);color:#fff;border-radius:8px;padding:9mm;text-align:center;text-decoration:none}
 .contact-card b{display:block;font-size:15px;margin-bottom:2mm}
 .contact-card span{font-size:12.5px;opacity:.85}
 .quote-box{margin-top:8mm;background:var(--mist);border:1px dashed var(--teal);border-radius:8px;padding:8mm;text-align:center}
@@ -109,22 +140,22 @@ ul.bullets li b{color:var(--navy)}
   <div class="sub2">محفظهٔ صداگیر، نمایشگر دما و صفحه‌نمایش لمسی — هر سه یکپارچه در یک دستگاه.</div>
   <div class="hero"><img src="assets/device_lab1.png" alt="UHP-400 در آزمایشگاه"></div>
   <div class="origin">
-    <span>طراحی و ساخت در لیتوانی، اتحادیهٔ اروپا</span>
-    <span class="num">topsonics.com</span>
+    <span>طراحی و ساخت شرکت توسعه فناوری مافوق صوت — ساخت ایران</span>
+    <span class="num">ultrasonic.co.ir</span>
   </div>
 </div>
 
 <!-- ============================================================ TRUST + INTRO -->
 <div class="page">
-  <div class="kicker"><span class="eyebrow">دربارهٔ توپ‌سونیکس</span><span class="line"></span></div>
+  <div class="kicker"><span class="eyebrow">دربارهٔ سازنده</span><span class="line"></span></div>
   <h2 class="section-title">یک دستگاه کامل، آمادهٔ کار از روز اول</h2>
-  <p class="lede">توپ‌سونیکس دستگاه‌های هموژنایزر اولتراسونیک را برای آزمایشگاه‌های تحقیقاتی و دانشگاهی طراحی و می‌سازد. UHP-400 سه بخشی که معمولاً باید جداگانه تهیه شوند — محفظهٔ صداگیر، نمایشگر دما و واحد کنترل لمسی — را در یک دستگاه واحد جمع کرده است.</p>
+  <p class="lede">UHP-400 توسط شرکت توسعه فناوری مافوق صوت در ایران طراحی و ساخته می‌شود. سه بخشی که معمولاً باید جداگانه تهیه شوند — محفظهٔ صداگیر، نمایشگر دما و واحد کنترل لمسی — در این دستگاه در یک مجموعهٔ واحد جمع شده‌اند.</p>
 
   <div class="trust">
-    <div class="card"><b>شرکتی اروپایی</b><span>ثبت‌شده و فعال در لیتوانی از سال ۲۰۲۰؛ مونتاژ و آزمون نهایی در لیتوانی انجام می‌شود.</span></div>
-    <div class="card"><b>سابقهٔ مهندسی از ۲۰۰۳</b><span>ریشهٔ فنی تیم در طراحی اولتراسونیک قدرت، به بیش از دو دهه می‌رسد.</span></div>
-    <div class="card"><b>دستگاه یکپارچه</b><span>محفظهٔ صداگیر، میز نمونه، سنسور دما و صفحه لمسی — همه از ابتدا در دستگاه تعبیه شده‌اند، نه جانبی‌های جداگانه.</span></div>
-    <div class="card"><b>پشتیبانی مستقیم</b><span>پرسش‌های فنی مستقیماً توسط تیمی پاسخ داده می‌شود که خود دستگاه را طراحی کرده است.</span></div>
+    <div class="card"><b>ساخت ایران</b><span>طراحی، مونتاژ و آزمون نهایی در ایران؛ به هیچ قطعه یا سرویس خارجی وابسته نیست.</span></div>
+    <div class="card"><b>فعال از سال ۱۳۸۲</b><span>سابقهٔ تیم فنی در اولتراسونیک قدرت، به بیش از دو دهه می‌رسد.</span></div>
+    <div class="card"><b>دستگاه یکپارچه</b><span>محفظهٔ صداگیر، میز نمونه، سنسور دما و صفحهٔ لمسی — همه از ابتدا در دستگاه تعبیه شده‌اند، نه جانبی‌های جداگانه.</span></div>
+    <div class="card"><b>پشتیبانی مستقیم</b><span>پرسش‌های فنی مستقیماً توسط همان تیمی پاسخ داده می‌شود که دستگاه را طراحی کرده است.</span></div>
   </div>
 
   <div class="kicker" style="margin-top:9mm"><span class="eyebrow">اصل کار</span><span class="line"></span></div>
@@ -145,6 +176,12 @@ ul.bullets li b{color:var(--navy)}
   <div class="twocol">
     <div>
       <div class="hero-mid"><img src="assets/device_front.png" alt="UHP-400 نمای جلو"></div>
+      <div class="kicker"><span class="eyebrow">کنترل و نمایش</span><span class="line"></span></div>
+      <p style="font-size:12.5px">وضعیت دستگاه در حین کار از پشت پنجرهٔ محفظه نیز قابل مشاهده است: نور داخلی محفظه برای هر مرحله (آماده، در حال اجرا، توقف، پایان، خطا) رنگ مشخصی نشان می‌دهد و این رنگ از طریق صفحهٔ لمسی قابل انتخاب است. تنظیم توان، حالت پالس و دما نیز از همین صفحه انجام می‌شود و سوابق اجراهای قبلی روی دستگاه نگه‌داری می‌شود.</p>
+      <div class="chip-row" style="margin-top:4mm">
+        <div class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-8 4 16 2-8h6"/></svg>ثبت سوابق اجرا</div>
+        <div class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l3 2M10 2h4"/></svg>توقف خودکار در حد دما</div>
+      </div>
     </div>
     <div>
       <table class="spec">
@@ -164,15 +201,20 @@ ul.bullets li b{color:var(--navy)}
     </div>
   </div>
 
-  <div class="kicker" style="margin-top:8mm"><span class="eyebrow">کنترل و نمایش</span><span class="line"></span></div>
-  <p>وضعیت دستگاه در حین کار از پشت پنجرهٔ محفظه نیز قابل مشاهده است: نور داخلی محفظه برای هر مرحله (آماده، در حال اجرا، توقف، پایان، خطا) رنگ مشخصی نشان می‌دهد و این رنگ از طریق صفحهٔ لمسی قابل انتخاب است. تنظیم توان، حالت پالس و دما نیز از همین صفحه انجام می‌شود و سوابق اجراهای قبلی روی دستگاه نگه‌داری می‌شود.</p>
-
   <div class="foot"><span>UHP-400 — کاتالوگ محصول</span><span class="num">2</span></div>
 </div>
 
 <!-- ============================================================ IN THE BOX -->
 <div class="page">
-  <div class="kicker"><span class="eyebrow">محتویات بسته</span><span class="line"></span></div>
+  <div class="kicker"><span class="eyebrow">رنگ بدنه</span><span class="line"></span></div>
+  <h2 class="section-title">سه رنگ بدنه، به انتخاب شما</h2>
+  <div class="color-grid">
+    <figure class="color-card"><img src="assets/render-white.jpg" alt="بدنهٔ سفید UHP-400"><figcaption><span class="color-dot" style="background:#f3f4f5;border-color:#c9ccd0"></span>سفید</figcaption></figure>
+    <figure class="color-card"><img src="assets/render-green.jpg" alt="بدنهٔ سبز UHP-400"><figcaption><span class="color-dot" style="background:#2f8f5b"></span>سبز</figcaption></figure>
+    <figure class="color-card"><img src="assets/render-blue.jpg" alt="بدنهٔ آبی UHP-400"><figcaption><span class="color-dot" style="background:var(--blue)"></span>آبی</figcaption></figure>
+  </div>
+
+  <div class="kicker" style="margin-top:9mm"><span class="eyebrow">محتویات بسته</span><span class="line"></span></div>
   <h2 class="section-title">آنچه همراه دستگاه ارسال می‌شود</h2>
   <p class="lede">تصاویر واقعی از محموله‌ای که برای مشتری ارسال می‌شود، نه تصاویر شبیه‌سازی‌شده.</p>
 
@@ -196,13 +238,13 @@ ul.bullets li b{color:var(--navy)}
 <div class="page">
   <h2 class="chapter"><span class="chnum">2</span>کاربردها</h2>
   <div class="rule"></div>
-  <p class="lede">فرایندهای زیر، کاربردهای شناخته‌شده و استانداردِ هموژنایزرهای اولتراسونیک پروبی‌اند — این توضیح برای کمک به تشخیص کاربرد شما آمده، نه ادعایی دربارهٔ عملکرد اندازه‌گیری‌شدهٔ UHP-400 در هر یک از آن‌ها.</p>
+  <p class="lede">کاربردهای اصلی UHP-400 نزد مشتریان فعلی؛ هر مورد با شواهد علمی در صفحهٔ بعد پشتیبانی می‌شود.</p>
 
   <div class="app-grid">
-    <div class="app-card"><span class="tag">پاشیدگی</span><h3>امولسیون‌سازی و تعلیق</h3><p>اختلاط مایعات غیرقابل‌امتزاج و پخش یکنواخت ذرات جامد در مایع، تا اندازهٔ ذرات بسیار ریز.</p></div>
-    <div class="app-card"><span class="tag">زیست‌شناسی</span><h3>تخریب سلولی و بافتی</h3><p>شکستن دیوارهٔ سلول‌های باکتری، مخمر و گیاهی برای استخراج DNA، RNA و پروتئین.</p></div>
-    <div class="app-card"><span class="tag">استخراج</span><h3>استخراج ترکیبات</h3><p>انتقال سریع‌تر ترکیبات فعال از مواد گیاهی به فاز مایع، معمولاً با دما و حلال کمتر نسبت به روش‌های متداول.</p></div>
-    <div class="app-card"><span class="tag">آماده‌سازی نمونه</span><h3>گازگیری</h3><p>حذف سریع گازهای محلول در مایعات، برای مثال پیش از آنالیزهای حساس به حباب هوا.</p></div>
+    <div class="app-card"><span class="tag">زیست‌شناسی</span><h3>لیز سلولی و بافتی</h3><p>شکستن دیوارهٔ باکتری، مخمر و بافت برای استخراج DNA، RNA و پروتئین؛ و خرد کردن کروماتین در آزمایش ChIP.</p></div>
+    <div class="app-card"><span class="tag">پاشیدگی</span><h3>امولسیون‌سازی و پراکنده‌سازی</h3><p>اختلاط مایعات غیرقابل‌امتزاج و پخش یکنواخت نانوذرات در مایع، تا اندازهٔ ذرات بسیار ریز.</p></div>
+    <div class="app-card"><span class="tag">استخراج</span><h3>استخراج ترکیبات گیاهی</h3><p>انتقال سریع‌تر ترکیبات فنولی و فعال از مواد گیاهی به فاز مایع، در زمان کوتاه‌تر از خیساندن معمول.</p></div>
+    <div class="app-card"><span class="tag">آماده‌سازی نمونه</span><h3>تنظیمات تکرارپذیر</h3><p>ذخیره و بازخوانی توان، دیوتی‌سایکل، زمان و حد دما، برای اجراهای یکسان بین اپراتورها و شیفت‌ها.</p></div>
   </div>
 
   <div class="limit-note">صداقت دربارهٔ محدودیت‌ها: UHP-400 با دو پروب (۷ و ۱۵ میلی‌متر) و محدودهٔ حجمی کلی ۱۰۰ تا ۳٬۵۰۰ میلی‌لیتر ساخته شده است؛ برای حجم‌های بسیار کوچک‌تر (میکرولیتری) یا اندازه‌های دیگر پروب، این پیکربندی فعلی دستگاه نیست.</div>
@@ -213,24 +255,89 @@ ul.bullets li b{color:var(--navy)}
   <div class="foot"><span>UHP-400 — کاتالوگ محصول</span><span class="num">4</span></div>
 </div>
 
+<!-- ============================================================ RESEARCH / EVIDENCE -->
+<div class="page">
+  <h2 class="chapter"><span class="chnum">3</span>شواهد علمی</h2>
+  <div class="rule"></div>
+  <p class="lede">هر کاربرد بالا به یک مقالهٔ داوری‌شده و دسترسی‌آزاد متکی است. تصویرها و یافته‌ها با نمونه‌ها و تجهیزات خود آن پژوهش‌ها به‌دست آمده‌اند، نه با UHP-400؛ عدد سمت راست پاراگراف، مشخصهٔ متناظر در UHP-400 است.</p>
+
+  <ul class="ref-list">
+    <li class="ref-item"><div class="ref-body"><h3>پراکنده‌سازی نانوذرات با سونیکاسیون پرابی</h3>
+      <div class="meta">Pradhan et al., 2016 · J. Nanoparticle Research 18:285</div>
+      <div class="finding">سونیکاسیون پرابی نانوذرات فلزی را بهتر از حمام اولتراسونیک پراکنده کرد. <b>UHP-400: سونیکاسیون پرابی تا ۴۰۰ وات.</b></div>
+      <a href="https://doi.org/10.1007/s11051-016-3597-5" class="num" dir="ltr">doi.org/10.1007/s11051-016-3597-5</a></div></li>
+    <li class="ref-item"><div class="ref-body"><h3>اثر روش و توان سونیکاسیون بر تکرارپذیری نتایج</h3>
+      <div class="meta">McCormack et al., 2025 · Particle and Fibre Toxicology 22</div>
+      <div class="finding">تغییر روش، توان و مدت سونیکاسیون، خواص ذرات و نتایج بعدی را تغییر می‌دهد. <b>UHP-400: توان، پالس و زمان به‌صورت عدد دقیق تنظیم می‌شوند.</b></div>
+      <a href="https://doi.org/10.1186/s12989-025-00627-8" class="num" dir="ltr">doi.org/10.1186/s12989-025-00627-8</a></div></li>
+    <li class="ref-item"><div class="ref-body"><h3>پارامترهای بحرانی برای خرد کردن کروماتین (ChIP)</h3>
+      <div class="meta">Pchelintsev, Adams &amp; Nelson, 2016 · PLoS ONE 11:e0148023</div>
+      <div class="finding">انرژی لازم برای خرد کردن کروماتین، اغلب پروتئین‌های بزرگ را تخریب می‌کرد. <b>UHP-400: حالت پالس و حد دما با توقف خودکار.</b></div>
+      <a href="https://doi.org/10.1371/journal.pone.0148023" class="num" dir="ltr">doi.org/10.1371/journal.pone.0148023</a></div></li>
+    <li class="ref-item"><div class="ref-body"><h3>استخراج اسیدهای فنولی: خیساندن در برابر اولتراسونیک</h3>
+      <div class="meta">Momchev et al., 2020 · Molecules 25:5142</div>
+      <div class="finding">استخراج به کمک اولتراسونیک در زمان کوتاه‌تر بازده به‌مراتب بالاتری داد. <b>UHP-400: هر چرخه تا ۳۰ دقیقه.</b></div>
+      <a href="https://doi.org/10.3390/molecules25215142" class="num" dir="ltr">doi.org/10.3390/molecules25215142</a></div></li>
+    <li class="ref-item"><div class="ref-body"><h3>استخراج پالسی با حلال خوراکی، جایگزین سبز خیساندن</h3>
+      <div class="meta">Turrini et al., 2019 · Foods 8:466</div>
+      <div class="finding">استخراج پالسی اولتراسونیک به‌عنوان جایگزینی سبزتر برای خیساندن معمول آزموده شد. <b>UHP-400: حالت پالس با دیوتی ۵ تا ۹۵٪.</b></div>
+      <a href="https://doi.org/10.3390/foods8100466" class="num" dir="ltr">doi.org/10.3390/foods8100466</a></div></li>
+    <li class="ref-item"><div class="ref-body"><h3>وابستگی بیان ژن بدون سلول به انرژی سونیکاسیون در لیز</h3>
+      <div class="meta">Piorino &amp; Styczynski, 2023 · ACS Synthetic Biology 12</div>
+      <div class="finding">بهترین انرژی ورودی برای لیز سلولی، از آزمایشی به آزمایش دیگر تغییر کرد. <b>UHP-400: انرژی هر اجرا ثبت می‌شود.</b></div>
+      <a href="https://doi.org/10.1021/acssynbio.3c00312" class="num" dir="ltr">doi.org/10.1021/acssynbio.3c00312</a></div></li>
+  </ul>
+
+  <div class="foot"><span>UHP-400 — کاتالوگ محصول</span><span class="num">5</span></div>
+</div>
+
+<!-- ============================================================ FAQ -->
+<div class="page">
+  <div class="kicker"><span class="eyebrow">پرسش‌های پرتکرار</span><span class="line"></span></div>
+  <h2 class="section-title">آنچه آزمایشگاه‌ها دربارهٔ UHP-400 بیشتر می‌پرسند</h2>
+
+  <div class="faq-item">
+    <h3><span class="q-mark">؟</span>برای هر حجم نمونه از کدام پروب استفاده کنم؟</h3>
+    <p>برای حجم ۱۰۰ میلی‌لیتر تا ۳٫۵ لیتر از پروب ۱۵ میلی‌متری و برای حجم‌های کمتر (ویال، لوله، بشر کوچک) از پروب ۷ میلی‌متری استفاده کنید. هر دو پروب از تیتانیوم Ti-6Al-4V هستند و روی یک استک آکوستیک بسته می‌شوند.</p>
+  </div>
+  <div class="faq-item">
+    <h3><span class="q-mark">؟</span>چطور از داغ شدن نمونه هنگام سونیکیت جلوگیری کنم؟</h3>
+    <p>حالت پالس، خنک‌کردن و حد دما را با هم به کار ببرید. دیوتی‌سایکل پالس از ۵ تا ۹۵٪ یک دورهٔ ۱۵ ثانیه‌ای قابل‌تنظیم است و سنسور داخلی با رسیدن به حد تعیین‌شده، کار را خودکار متوقف می‌کند.</p>
+  </div>
+  <div class="faq-item">
+    <h3><span class="q-mark">؟</span>نوک پروب چقدر باید داخل مایع برود؟</h3>
+    <p>نوک پروب را حدود ۱۰ تا ۱۵ میلی‌متر زیر سطح مایع و در مرکز ظرف قرار دهید، دست‌کم به اندازهٔ قطر پروب دور از دیواره و کف ظرف.</p>
+  </div>
+  <div class="faq-item">
+    <h3><span class="q-mark">؟</span>آیا دستگاه پرسروصداست؟ جعبهٔ صدا جداگانه لازم دارد؟</h3>
+    <p>خیر. UHP-400 محفظهٔ صوتی داخلی با در و پنجره دارد؛ پروب داخل محفظه کار می‌کند و نمونه از پشت پنجره قابل‌مشاهده است.</p>
+  </div>
+  <div class="faq-item">
+    <h3><span class="q-mark">؟</span>قیمت و پیش‌فاکتور چطور دریافت می‌شود؟</h3>
+    <p>پروب و رنگ بدنه را در فرم پیش‌فاکتور فوری سایت انتخاب کنید تا همان لحظه پیش‌فاکتور رسمی با شماره و تاریخ، به‌صورت PDF صادر شود؛ یا مستقیماً برای قیمت روز تماس بگیرید.</p>
+  </div>
+
+  <div class="foot"><span>UHP-400 — کاتالوگ محصول</span><span class="num">6</span></div>
+</div>
+
 <!-- ============================================================ CONTACT -->
 <div class="page">
-  <h2 class="chapter"><span class="chnum">3</span>تماس با ما</h2>
+  <h2 class="chapter"><span class="chnum">4</span>تماس با ما</h2>
   <div class="rule"></div>
-  <p class="lede">توپ‌سونیکس — ویلنیوس، لیتوانی، اتحادیهٔ اروپا.</p>
+  <p class="lede">شرکت توسعه فناوری مافوق صوت — ساخت ایران.</p>
 
   <div class="contact-grid">
-    <div class="contact-card"><b>ایمیل</b><span class="num" dir="ltr">info@topsonics.com</span></div>
-    <div class="contact-card"><b>واتس‌اپ</b><span class="num" dir="ltr">+370 663 02479</span></div>
-    <div class="contact-card"><b>تلفن</b><span class="num" dir="ltr">+370 658 43069</span></div>
-    <div class="contact-card"><b>وب‌سایت</b><span class="num" dir="ltr">topsonics.com</span></div>
+    <a class="contact-card" href="https://wa.me/989123830551"><b>واتس‌اپ و تلگرام</b><span class="num" dir="ltr">+98 912 383 0551</span></a>
+    <a class="contact-card" href="tel:+989123830551"><b>تماس تلفنی</b><span class="num" dir="ltr">+98 912 383 0551</span></a>
+    <a class="contact-card" href="https://ultrasonic.co.ir"><b>وب‌سایت</b><span class="num" dir="ltr">ultrasonic.co.ir</span></a>
+    <a class="contact-card" href="https://ultrasonic.co.ir/uhp-400/"><b>پیش‌فاکتور فوری</b><span class="num" dir="ltr">ultrasonic.co.ir/uhp-400</span></a>
   </div>
 
   <div class="quote-box">
-    <p>برای استعلام قیمت یا مشاوره دربارهٔ نمونهٔ خود، نوع نمونه، حجم کار، کاربرد و کشور مقصد را برای ما ارسال کنید.</p>
+    <p>برای استعلام قیمت یا مشاوره دربارهٔ نمونهٔ خود، نوع نمونه، حجم کار، تعداد دستگاه و رنگ بدنهٔ موردنظر را در فرم پیش‌فاکتور فوری سایت وارد کنید یا مستقیماً تماس بگیرید.</p>
   </div>
 
-  <div class="foot"><span>© توپ‌سونیکس، ویلنیوس، لیتوانی</span><span>طراحی و ساخت در لیتوانی، اتحادیهٔ اروپا</span></div>
+  <div class="foot"><span>© ۱۴۰۵ شرکت توسعه فناوری مافوق صوت</span><span>طراحی و ساخت ایران</span></div>
 </div>
 
 </body>

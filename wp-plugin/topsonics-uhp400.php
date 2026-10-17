@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Topsonics UHP-400 – صفحهٔ محصول سه‌بعدی و پیش‌فاکتور
  * Description: صفحهٔ فارسی هموژنایزر اولتراسونیک UHP-400 با مدل سه‌بعدی، پیش‌فاکتور فوری PDF، کد تخفیف یک‌بارمصرف، ذخیرهٔ درخواست‌ها و ارسال ایمیل. همهٔ فایل‌ها داخل افزونه است و به هیچ سرور خارجی وابسته نیست. برای نمایش، کد کوتاه [uhp400] را در یک برگه بگذارید.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: شرکت توسعه فناوری مافوق صوت
  * Requires at least: 5.8
  * Requires PHP: 7.0
@@ -11,7 +11,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-define('UHP400_VER', '1.0.1');
+define('UHP400_VER', '1.0.2');
 define('UHP400_DIR', plugin_dir_path(__FILE__));
 define('UHP400_URL', plugin_dir_url(__FILE__));
 
