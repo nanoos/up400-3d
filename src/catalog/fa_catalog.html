@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>UHP-400 — کاتالوگ محصول</title>
+<style>
+@font-face{font-family:'Vazirmatn';font-weight:400;font-style:normal;src:url('fonts/vazirmatn-arabic-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Vazirmatn';font-weight:600;font-style:normal;src:url('fonts/vazirmatn-arabic-600-normal.woff2') format('woff2');}
+@font-face{font-family:'Vazirmatn';font-weight:700;font-style:normal;src:url('fonts/vazirmatn-arabic-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Titillium Web';font-weight:400;font-style:normal;src:url('fonts/titillium-web-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Titillium Web';font-weight:600;font-style:normal;src:url('fonts/titillium-web-latin-600-normal.woff2') format('woff2');}
+@font-face{font-family:'Titillium Web';font-weight:700;font-style:normal;src:url('fonts/titillium-web-latin-700-normal.woff2') format('woff2');}
+
+:root{
+  --paper:#ffffff; --mist:#f2f4f6; --line:#d9dee3;
+  --ink:#191e23; --text:#3a4148; --mute:#66707a;
+  --blue:#0f5aa5; --navy:#003761; --teal:#3fb6c2;
+  --brand:#3b2a8c;
+  --font:'Vazirmatn','Titillium Web',sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--mist);font-size:14.5px;line-height:1.85}
+.num{font-family:'Titillium Web','Vazirmatn',sans-serif;unicode-bidi:plus;}
+h1,h2,h3{font-family:var(--font);color:var(--navy);margin:0;font-weight:700;line-height:1.35}
+p{margin:0 0 10px 0}
+.page{width:210mm;min-height:297mm;padding:16mm 16mm;background:var(--paper);position:relative;page-break-after:always;overflow:hidden}
+.page:last-child{page-break-after:auto}
+.eyebrow{font:700 11.5px/1 var(--font);letter-spacing:.02em;color:var(--blue);text-transform:none;margin-bottom:8px;display:block}
+.kicker{display:flex;align-items:center;gap:10px;margin-bottom:4mm}
+.kicker .line{flex:1;height:1px;background:var(--line)}
+.section-title{font-size:22px;margin-bottom:3mm}
+.lede{color:var(--mute);font-size:13.5px;margin-bottom:6mm}
+
+/* ---------- cover ---------- */
+.cover{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;background:linear-gradient(180deg,#ffffff 0%,#eef3f7 60%,#e7eef3 100%)}
+.cover .logo{height:19mm;margin-bottom:14mm}
+.cover h1{font-size:46px;letter-spacing:.01em}
+.cover .sub1{font-size:17px;color:var(--navy);font-weight:600;margin-top:3mm}
+.cover .sub2{font-size:13px;color:var(--mute);margin-top:2mm;max-width:120mm}
+.cover .hero{width:100%;margin-top:10mm;border-radius:4px;overflow:hidden;box-shadow:0 18px 40px -16px rgba(0,30,60,.35)}
+.cover .hero img{width:100%;display:block}
+.cover .origin{position:absolute;bottom:16mm;right:16mm;left:16mm;display:flex;justify-content:space-between;font-size:10.5px;color:var(--mute);border-top:1px solid var(--line);padding-top:4mm}
+
+/* ---------- trust strip ---------- */
+.trust{display:grid;grid-template-columns:repeat(2,1fr);gap:6mm;margin-top:4mm}
+.trust .card{background:var(--mist);border:1px solid var(--line);border-radius:6px;padding:7mm;}
+.trust .card b{display:block;color:var(--navy);font-size:14px;margin-bottom:2mm}
+.trust .card span{color:var(--mute);font-size:12.5px}
+
+/* ---------- generic chapter ---------- */
+.chnum{font-family:'Titillium Web';font-weight:700;font-size:13px;color:#fff;background:var(--blue);border-radius:50%;width:9mm;height:9mm;display:inline-flex;align-items:center;justify-content:center;margin-left:4mm}
+h2.chapter{font-size:24px;display:flex;align-items:center}
+.rule{height:2px;background:var(--navy);width:100%;margin:4mm 0 8mm 0}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:9mm}
+.card-soft{background:var(--mist);border-radius:6px;padding:6mm;border:1px solid var(--line)}
+
+table.spec{width:100%;border-collapse:collapse;margin-top:3mm}
+table.spec tr{border-bottom:1px solid var(--line)}
+table.spec tr:first-child{border-top:1px solid var(--line)}
+table.spec th{text-align:right;color:var(--navy);font-weight:700;padding:3mm 2mm;width:42%;font-size:12.5px;background:#eef3f7}
+table.spec td{padding:3mm 2mm;font-size:12.5px;color:var(--text)}
+
+.formula{background:var(--navy);color:#fff;border-radius:6px;padding:6mm 8mm;text-align:center;font-family:'Titillium Web';font-size:17px;letter-spacing:.02em;margin:5mm 0}
+
+ul.bullets{margin:0;padding-inline-start:5mm}
+ul.bullets li{margin-bottom:3mm;font-size:13px}
+ul.bullets li b{color:var(--navy)}
+
+.pic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:4mm}
+.pic-grid figure{margin:0;background:var(--mist);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.pic-grid img{width:100%;display:block;aspect-ratio:1/1;object-fit:contain;background:#fff}
+.pic-grid figcaption{font-size:10.5px;color:var(--mute);text-align:center;padding:2.5mm}
+
+.hero-mid{width:100%;border-radius:6px;overflow:hidden;margin:4mm 0 6mm}
+.hero-mid img{width:100%;display:block}
+
+.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:6mm;margin-top:4mm}
+.app-card{border:1px solid var(--line);border-radius:6px;padding:6mm;background:#fff}
+.app-card .tag{display:inline-block;background:var(--teal);color:#fff;font:700 10px/1 var(--font);padding:2mm 3mm;border-radius:3px;margin-bottom:3mm}
+.app-card h3{font-size:14.5px;margin-bottom:2mm}
+.app-card p{font-size:12px;color:var(--mute);margin:0}
+
+.limit-note{background:#fdf3e4;border-inline-start:4px solid #b97a1a;padding:5mm 6mm;border-radius:4px;font-size:12px;color:#6b4e00;margin-top:5mm}
+
+.foot{position:absolute;bottom:12mm;right:16mm;left:16mm;display:flex;justify-content:space-between;font-size:9.5px;color:var(--mute);border-top:1px solid var(--line);padding-top:3mm}
+
+/* ---------- contact page ---------- */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:6mm;margin-top:6mm}
+.contact-card{background:var(--navy);color:#fff;border-radius:8px;padding:9mm;text-align:center}
+.contact-card b{display:block;font-size:15px;margin-bottom:2mm}
+.contact-card span{font-size:12.5px;opacity:.85}
+.quote-box{margin-top:8mm;background:var(--mist);border:1px dashed var(--teal);border-radius:8px;padding:8mm;text-align:center}
+.quote-box p{color:var(--mute);font-size:12.5px;margin-bottom:3mm}
+
+@page{size:A4;margin:0}
+@media print{.page{box-shadow:none}}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ COVER -->
+<div class="page cover">
+  <img class="logo" src="assets/logo.png" alt="Topsonics">
+  <span class="eyebrow">کاتالوگ محصول</span>
+  <h1>UHP-400</h1>
+  <div class="sub1">هموژنایزر اولتراسونیک آزمایشگاهی</div>
+  <div class="sub2">محفظهٔ صداگیر، نمایشگر دما و صفحه‌نمایش لمسی — هر سه یکپارچه در یک دستگاه.</div>
+  <div class="hero"><img src="assets/device_lab1.png" alt="UHP-400 در آزمایشگاه"></div>
+  <div class="origin">
+    <span>طراحی و ساخت در لیتوانی، اتحادیهٔ اروپا</span>
+    <span class="num">topsonics.com</span>
+  </div>
+</div>
+
+<!-- ============================================================ TRUST + INTRO -->
+<div class="page">
+  <div class="kicker"><span class="eyebrow">دربارهٔ توپ‌سونیکس</span><span class="line"></span></div>
+  <h2 class="section-title">یک دستگاه کامل، آمادهٔ کار از روز اول</h2>
+  <p class="lede">توپ‌سونیکس دستگاه‌های هموژنایزر اولتراسونیک را برای آزمایشگاه‌های تحقیقاتی و دانشگاهی طراحی و می‌سازد. UHP-400 سه بخشی که معمولاً باید جداگانه تهیه شوند — محفظهٔ صداگیر، نمایشگر دما و واحد کنترل لمسی — را در یک دستگاه واحد جمع کرده است.</p>
+
+  <div class="trust">
+    <div class="card"><b>شرکتی اروپایی</b><span>ثبت‌شده و فعال در لیتوانی از سال ۲۰۲۰؛ مونتاژ و آزمون نهایی در لیتوانی انجام می‌شود.</span></div>
+    <div class="card"><b>سابقهٔ مهندسی از ۲۰۰۳</b><span>ریشهٔ فنی تیم در طراحی اولتراسونیک قدرت، به بیش از دو دهه می‌رسد.</span></div>
+    <div class="card"><b>دستگاه یکپارچه</b><span>محفظهٔ صداگیر، میز نمونه، سنسور دما و صفحه لمسی — همه از ابتدا در دستگاه تعبیه شده‌اند، نه جانبی‌های جداگانه.</span></div>
+    <div class="card"><b>پشتیبانی مستقیم</b><span>پرسش‌های فنی مستقیماً توسط تیمی پاسخ داده می‌شود که خود دستگاه را طراحی کرده است.</span></div>
+  </div>
+
+  <div class="kicker" style="margin-top:9mm"><span class="eyebrow">اصل کار</span><span class="line"></span></div>
+  <h2 class="section-title">هموژناسیون اولتراسونیک چگونه کار می‌کند</h2>
+  <p>یک هموژنایزر اولتراسونیک، انرژی الکتریکی را به ارتعاش مکانیکی در فرکانسی بالاتر از محدودهٔ شنوایی انسان تبدیل می‌کند. یک مبدل پیزوالکتریک در داخل دستگاه با همین فرکانس ارتعاش می‌کند؛ هورن تیتانیومی دامنهٔ این ارتعاش را تقویت کرده و به نوک پروب — که در مایع نمونه غوطه‌ور است — منتقل می‌کند.</p>
+  <p>نوک پروب به‌سرعت مایع اطراف خود را فشرده و منبسط می‌کند؛ این چرخه، حباب‌های بخار میکروسکوپی تشکیل می‌دهد که بلافاصله و با شدت فرومی‌پاشند — پدیده‌ای به نام کاویتاسیون. فروپاشی هر حباب، یک جهش موضعی و آنی در فشار و دما ایجاد می‌کند. این اثر، در مقیاس میلیون‌ها حباب در ثانیه، همان چیزی است که ذرات را پخش می‌کند، دیوارهٔ سلولی را می‌شکند، مایعات غیرقابل‌اختلاط را امولسیون می‌کند و استخراج و واکنش‌ها را تسریع می‌بخشد.</p>
+
+  <div class="limit-note">به‌عنوان مثالی برای درک مقیاس پدیده: اگر نقطه‌ای با فرکانس ۲۵ کیلوهرتز و دامنهٔ ۱۰ میکرومتر نوسان کند، شتاب آن به حدود ۲۵٬۰۰۰ برابر شتاب جاذبهٔ زمین می‌رسد. در لحظهٔ فروپاشی حباب‌های کاویتاسیون، دماهای موضعی و آنی در حدود ۵٬۰۰۰ کلوین گزارش شده است (Suslick). این یک مثال عمومی از فیزیک کاویتاسیون است، نه مشخصهٔ اندازه‌گیری‌شدهٔ UHP-400.</div>
+
+  <div class="foot"><span>UHP-400 — کاتالوگ محصول</span><span class="num">1</span></div>
+</div>
+
+<!-- ============================================================ PRODUCT -->
+<div class="page">
+  <h2 class="chapter"><span class="chnum">1</span>دستگاه UHP-400</h2>
+  <div class="rule"></div>
+
+  <div class="twocol">
+    <div>
+      <div class="hero-mid"><img src="assets/device_front.png" alt="UHP-400 نمای جلو"></div>
+    </div>
+    <div>
+      <table class="spec">
+        <tr><th>نوع دستگاه</th><td>هموژنایزر اولتراسونیک رومیزی (نوع پروبی)</td></tr>
+        <tr><th>توان خروجی</th><td class="num">۰ تا ۴۰۰ وات، قابل‌تنظیم</td></tr>
+        <tr><th>حالت پالس</th><td class="num">روشن ۱ تا ۱۵ ثانیه / خاموش ۱ تا ۱۲ ثانیه، هر چرخه حداکثر ۳۰ دقیقه</td></tr>
+        <tr><th>واحد کنترل</th><td>صفحه‌نمایش لمسی TFT، پنج‌اینچی</td></tr>
+        <tr><th>هورن / پروب</th><td>تیتانیوم Ti-6Al-4V، قطر نوک ۱۵ میلی‌متر</td></tr>
+        <tr><th>حجم کار</th><td class="num">۱۰۰ تا ۳٬۵۰۰ میلی‌لیتر</td></tr>
+        <tr><th>محفظه</th><td>محفظهٔ صداگیر توکار با پنجرهٔ شیشه‌ای و نور داخلی</td></tr>
+        <tr><th>نمایشگر دما</th><td>دماسنج توکار</td></tr>
+        <tr><th>برق ورودی</th><td class="num">۲۲۰ ولت، ۵۰ تا ۶۰ هرتز، ۲ آمپر</td></tr>
+        <tr><th>ابعاد</th><td class="num">عرض ۳۰۰ میلی‌متر، ارتفاع ۶۷۰ میلی‌متر</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="kicker" style="margin-top:8mm"><span class="eyebrow">کنترل و نمایش</span><span class="line"></span></div>
+  <p>وضعیت دستگاه در حین کار از پشت پنجرهٔ محفظه نیز قابل مشاهده است: نور داخلی محفظه بر اساس مرحلهٔ اجرا تغییر رنگ می‌دهد، در کنار تنظیم توان و حالت پالس از طریق صفحهٔ لمسی.</p>
+
+  <div class="foot"><span>UHP-400 — کاتالوگ محصول</span><span class="num">2</span></div>
+</div>
+
+<!-- ============================================================ IN THE BOX -->
+<div class="page">
+  <div class="kicker"><span class="eyebrow">محتویات بسته</span><span class="line"></span></div>
+  <h2 class="section-title">آنچه همراه دستگاه ارسال می‌شود</h2>
+  <p class="lede">تصاویر واقعی از محموله‌ای که برای مشتری ارسال می‌شود، نه تصاویر شبیه‌سازی‌شده.</p>
+
+  <div class="pic-grid">
+    <figure><img src="assets/box_crate.png" alt="جعبهٔ حمل"><figcaption>جعبهٔ چوبی حمل</figcaption></figure>
+    <figure><img src="assets/box_head.png" alt="سر کنترل، مبدل، هورن و پروب"><figcaption>سر کنترل، مبدل، هورن و پروب</figcaption></figure>
+    <figure><img src="assets/box_cables.png" alt="کابل‌ها و سنسور دما"><figcaption>کابل‌ها و سنسور دما</figcaption></figure>
+  </div>
+
+  <div class="kicker" style="margin-top:10mm"><span class="eyebrow">نمای دستگاه</span><span class="line"></span></div>
+  <div class="pic-grid">
+    <figure><img src="assets/device_angle.png" alt="UHP-400 نمای زاویه‌دار"><figcaption>نمای زاویه‌دار</figcaption></figure>
+    <figure><img src="assets/device_front2.png" alt="UHP-400 نمای جلو، روشن"><figcaption>نمای جلو</figcaption></figure>
+    <figure><img src="assets/device_lab2.png" alt="UHP-400 روی میز آزمایشگاه"><figcaption>در محیط آزمایشگاه</figcaption></figure>
+  </div>
+
+  <div class="foot"><span>UHP-400 — کاتالوگ محصول</span><span class="num">3</span></div>
+</div>
+
+<!-- ============================================================ APPLICATIONS -->
+<div class="page">
+  <h2 class="chapter"><span class="chnum">2</span>کاربردها</h2>
+  <div class="rule"></div>
+  <p class="lede">فرایندهای زیر، کاربردهای شناخته‌شده و استانداردِ هموژنایزرهای اولتراسونیک پروبی‌اند — این توضیح برای کمک به تشخیص کاربرد شما آمده، نه ادعایی دربارهٔ عملکرد اندازه‌گیری‌شدهٔ UHP-400 در هر یک از آن‌ها.</p>
+
+  <div class="app-grid">
+    <div class="app-card"><span class="tag">پاشیدگی</span><h3>امولسیون‌سازی و تعلیق</h3><p>اختلاط مایعات غیرقابل‌امتزاج و پخش یکنواخت ذرات جامد در مایع، تا اندازهٔ ذرات بسیار ریز.</p></div>
+    <div class="app-card"><span class="tag">زیست‌شناسی</span><h3>تخریب سلولی و بافتی</h3><p>شکستن دیوارهٔ سلول‌های باکتری، مخمر و گیاهی برای استخراج DNA، RNA و پروتئین.</p></div>
+    <div class="app-card"><span class="tag">استخراج</span><h3>استخراج ترکیبات</h3><p>انتقال سریع‌تر ترکیبات فعال از مواد گیاهی به فاز مایع، معمولاً با دما و حلال کمتر نسبت به روش‌های متداول.</p></div>
+    <div class="app-card"><span class="tag">آماده‌سازی نمونه</span><h3>گازگیری</h3><p>حذف سریع گازهای محلول در مایعات، برای مثال پیش از آنالیزهای حساس به حباب هوا.</p></div>
+  </div>
+
+  <div class="limit-note">صداقت دربارهٔ محدودیت‌ها: UHP-400 با یک اندازهٔ هورن (۱۵ میلی‌متر) و محدودهٔ حجمی ۱۰۰ تا ۳٬۵۰۰ میلی‌لیتر ساخته شده است. برای حجم‌های میکرولیتری یا نیاز به چند اندازهٔ پروب، این پیکربندی فعلی دستگاه نیست.</div>
+
+  <div class="kicker" style="margin-top:9mm"><span class="eyebrow">گام بعدی</span><span class="line"></span></div>
+  <p>نمونه و حجم کار خود را برای ما شرح دهید تا تنظیمات پیشنهادی را ارائه کنیم.</p>
+
+  <div class="foot"><span>UHP-400 — کاتالوگ محصول</span><span class="num">4</span></div>
+</div>
+
+<!-- ============================================================ CONTACT -->
+<div class="page">
+  <h2 class="chapter"><span class="chnum">3</span>تماس با ما</h2>
+  <div class="rule"></div>
+  <p class="lede">توپ‌سونیکس — ویلنیوس، لیتوانی، اتحادیهٔ اروپا.</p>
+
+  <div class="contact-grid">
+    <div class="contact-card"><b>ایمیل</b><span class="num" dir="ltr">info@topsonics.com</span></div>
+    <div class="contact-card"><b>واتس‌اپ</b><span class="num" dir="ltr">+370 663 02479</span></div>
+    <div class="contact-card"><b>تلفن</b><span class="num" dir="ltr">+370 658 43069</span></div>
+    <div class="contact-card"><b>وب‌سایت</b><span class="num" dir="ltr">topsonics.com</span></div>
+  </div>
+
+  <div class="quote-box">
+    <p>برای استعلام قیمت یا مشاوره دربارهٔ نمونهٔ خود، نوع نمونه، حجم کار، کاربرد و کشور مقصد را برای ما ارسال کنید.</p>
+  </div>
+
+  <div class="foot"><span>© توپ‌سونیکس، ویلنیوس، لیتوانی</span><span>طراحی و ساخت در لیتوانی، اتحادیهٔ اروپا</span></div>
+</div>
+
+</body>
+</html>
