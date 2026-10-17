@@ -82,6 +82,15 @@ main{position:relative;z-index:1}
 .blist li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
 .blist li::before{content:"";width:18px;height:18px;margin-top:5px;border-radius:50%;background:var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
 .blist b{display:block;color:var(--ink);font-weight:600}
+.inbox-en{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:36px}
+@media (max-width:900px){.inbox-en{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.inbox-en{grid-template-columns:minmax(0,1fr)}.inbox-en img{height:220px}}
+.inbox-en figure{margin:0;background:var(--mist);border-radius:3px;overflow:hidden;display:grid;grid-template-rows:1fr auto;min-width:0}
+.inbox-en img{width:100%;min-width:0;height:260px;object-fit:contain;background:#ece9e0;display:block}
+.inbox-en figcaption{padding:12px 14px;font-size:14.5px;color:var(--ink);text-align:center;white-space:normal;min-width:0}
+.rlist-en{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid var(--line)}
+.rlist-en li{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.rlist-en b{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:14px;flex:none}
 .blist span{color:var(--mute)}
 @media (max-width:640px){.benefits{grid-template-columns:minmax(0,1fr)}.benefits img{max-width:240px}}
 
@@ -314,6 +323,30 @@ footer.wrap{padding-bottom:84px}
           <li><div><b>Help from the people who built it</b><span>Designed and made in Vilnius, Lithuania, by a team working in power ultrasonics since 2003.</span></div></li>
         </ul>
       </div>
+    </div></div>
+  </section>
+
+  <!-- WHAT'S IN THE BOX -->
+  <section class="paper" id="receive">
+    <div class="sec wrap"><div class="inner">
+      <div class="sec-head">
+        <p class="eyebrow">What you receive</p>
+        <h2>Shipped in a sturdy wooden crate, ready to install</h2>
+        <p>Photographed from a real delivery. The instrument ships in a plywood crate with steel edges.</p>
+      </div>
+      <div class="inbox-en">
+        <figure><img src="box-crate.webp" alt="UHP-400 plywood shipping crate with steel edges, rope handles and the Topsonics logo" width="900" height="1125" loading="lazy"><figcaption>Shipping crate</figcaption></figure>
+        <figure><img src="box-head.webp" alt="UHP-400 control head with touchscreen, acoustic stack and titanium probe" width="900" height="1125" loading="lazy"><figcaption>Control head &amp; probe</figcaption></figure>
+        <figure><img src="box-cables.webp" alt="UHP-400 cables and stainless-steel temperature sensor" width="1400" height="744" loading="lazy"><figcaption>Cables &amp; sensor</figcaption></figure>
+        <figure><img src="box-cabinet.webp" alt="UHP-400 sound cabinet with door and window, as packed" width="900" height="1125" loading="lazy"><figcaption>Sound cabinet</figcaption></figure>
+      </div>
+      <ul class="rlist-en">
+        <li><b>1</b><span>Control head with 5-inch touchscreen</span></li>
+        <li><b>2</b><span>Sound cabinet with door, window and LED chamber light</span></li>
+        <li><b>3</b><span>Adjustable sample table with silicone ring</span></li>
+        <li><b>4</b><span>Acoustic stack with titanium probe, 7 or 15 mm</span></li>
+        <li><b>5</b><span>Internal temperature sensor</span></li>
+      </ul>
     </div></div>
   </section>
 

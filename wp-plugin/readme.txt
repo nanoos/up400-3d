@@ -8,6 +8,9 @@ Admin: menu "UHP-400" (prices and parts, requests, discount codes).
 
 == Changelog ==
 
+= 1.0.4 =
+* "آنچه دریافت می‌کنید" now shows a 4th real photo: the sound cabinet with door and window.
+
 = 1.0.3 =
 * Hero tagline updated: "همگن‌سازی نانومواد، استخراج گیاهان دارویی و ... همه در یک دستگاه."
 * New "کاتالوگ" button in the hero, and new admin settings fields for the catalog PDF link
